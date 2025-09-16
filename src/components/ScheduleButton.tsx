@@ -1,4 +1,5 @@
 import { Button, Box, useTheme } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 type ScheduleButtonProps = {
   text: string;
   onClick?: () => void; // opcional, caso queira passar ação
@@ -6,10 +7,15 @@ type ScheduleButtonProps = {
 
 export const ScheduleButton: React.FC<ScheduleButtonProps> = ({ text }) => {
   const theme = useTheme(); // Hook para acessar o tema e cores configuradas
+  const navigate = useNavigate();
 
+  function redirect() {
+    navigate("/questionary");
+  }
   return (
     <Button
       variant="contained"
+      onClick={redirect}
       sx={{
         display: "flex",
         alignItems: "center",
