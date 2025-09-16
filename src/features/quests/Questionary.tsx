@@ -56,20 +56,21 @@ const StyledContainer = styled(Container)(({ theme }) => ({
     justifyContent: 'center',
     alignItems: 'center',
     minHeight: '100vh',
-    backgroundColor: '#f5f7fa',
+    backgroundImage: "linear-gradient(135deg, #a2eafeff 0%, #95ffb0ff 100%)",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
     padding: theme.spacing(4),
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xl')]: {
         padding: theme.spacing(2),
     },
 }));
 
 const StyledCard = styled(Card)(({ theme }) => ({
     width: '100%',
-    maxWidth: 700,
     borderRadius: 4,
     boxShadow: '0px 10px 30px rgba(0, 0, 0, 0.08)',
     padding: theme.spacing(3),
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xl')]: {
         padding: theme.spacing(2),
     },
 }));

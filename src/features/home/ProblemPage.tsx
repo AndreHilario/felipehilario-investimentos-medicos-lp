@@ -81,6 +81,7 @@ export const ProblemPage = () => {
                             fontSize: { xs: "1.8rem", md: "2.5rem" },
                             color: 'rgb(45, 55, 72)',
                             letterSpacing: '-0.025em',
+                            lineHeight: 1.2
                         }}
                     >
                         Você já tem patrimônio. Faturamento alto.

@@ -8,7 +8,9 @@ export function StartPage() {
     return (
         <Box
             sx={{
-                backgroundColor: theme.palette.background?.default,
+                backgroundImage: "linear-gradient(135deg, #a2eafeff 0%, #95ffb0ff 100%)",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
                 minHeight: "90vh",
                 display: "flex",
                 flexDirection: "column",
@@ -21,7 +23,23 @@ export function StartPage() {
                 <Box sx={{ textAlign: "center", mb: theme.spacing(3) }}>
                     <Chip
                         icon={<CheckCircleOutlineOutlinedIcon />}
-                        label="Sua Transformação Financeira Começa Agora"
+                        label={
+                            <Typography
+                                variant="body1"
+                                sx={{
+                                    whiteSpace: "normal",
+                                    textAlign: "center",
+                                    lineHeight: 1.3,
+                                }}
+                            >
+                                Sua Transformação Financeira Começa Agora
+                            </Typography>
+                        }
+                        sx={{
+                            height: "auto",
+                            py: 1,
+                            px: 2,
+                        }}
                     />
                 </Box>
 
