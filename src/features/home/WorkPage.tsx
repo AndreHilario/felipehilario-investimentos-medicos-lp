@@ -66,7 +66,7 @@ export function WorkPage() {
 
         <Grid container spacing={4} justifyContent="center" alignItems="stretch">
           {steps.map((step) => (
-            <Grid item xs={12} sm={6} key={step.id}>
+            <>
               <Paper
                 elevation={3}
                 sx={{
@@ -147,7 +147,7 @@ export function WorkPage() {
                   </Typography>
                 </Stack>
               </Paper>
-            </Grid>
+            </>
           ))}
         </Grid>
       </Container>

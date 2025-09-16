@@ -1,6 +1,10 @@
 import { Button, Box, useTheme } from "@mui/material";
+type ScheduleButtonProps = {
+  text: string;
+  onClick?: () => void; // opcional, caso queira passar ação
+};
 
-export const ScheduleButton = ({text}) => {
+export const ScheduleButton: React.FC<ScheduleButtonProps> = ({ text }) => {
   const theme = useTheme(); // Hook para acessar o tema e cores configuradas
 
   return (

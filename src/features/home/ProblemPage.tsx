@@ -104,7 +104,7 @@ export const ProblemPage = () => {
                     alignItems="stretch" // força todos os itens a esticarem para a mesma altura
                 >
                     {allProblems.map((problem) => (
-                        <Grid item xs={12} sm={6} key={problem.id}>
+                        <>
                             <Card
                                 elevation={3}
                                 sx={{
@@ -165,7 +165,7 @@ export const ProblemPage = () => {
                                     </Typography>
                                 </Stack>
                             </Card>
-                        </Grid>
+                        </>
                     ))}
                 </Grid>
                 <Box sx={{mt: 6, display: "flex", justifyContent: "center"}}><ScheduleButton text={"Quero Agendar Uma Sessão"} /></Box>
