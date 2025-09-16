@@ -31,7 +31,7 @@ export function WorkPage() {
     <Box
       sx={{
         backgroundColor: theme.palette.background.default,
-        minHeight: "70vh",
+        minHeight: "90vh",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
