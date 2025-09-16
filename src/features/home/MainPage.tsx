@@ -16,13 +16,28 @@ export function MainPage() {
             }}
         >
             <Container maxWidth="lg" sx={{ marginBottom: 4 }}>
-                <Box sx={{ textAlign: "center", mb: theme.spacing(4) }}>
+                <Box sx={{ textAlign: "center", mb: theme.spacing(3) }}>
                     <Chip
                         icon={<CheckCircleOutlineOutlinedIcon />}
-                        label="Exclusivo para Médicos Especialistas"
+                        label={
+                            <Typography
+                                variant="body1"
+                                sx={{
+                                    whiteSpace: "normal",
+                                    textAlign: "center",
+                                    lineHeight: 1.3,
+                                }}
+                            >
+                                Exclusivo para Médicos Especialistas
+                            </Typography>
+                        }
+                        sx={{
+                            height: "auto",
+                            py: 1,
+                            px: 2,
+                        }}
                     />
                 </Box>
-
                 <Typography
                     variant="h1"
                     component="h1"
@@ -158,6 +173,7 @@ export function MainPage() {
                     color: theme.palette.text.secondary,
                     textAlign: "center",
                     mt: 2,
+                    px: 2,
                     fontSize: {
                         xs: '0.8rem',
                         sm: '0.9rem',
