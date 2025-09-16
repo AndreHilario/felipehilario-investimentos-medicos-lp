@@ -21,6 +21,9 @@ import {
 import Check from '@mui/icons-material/Check';
 import { styled, useTheme } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import Header from '../../components/Header';
 
 // -------- Tipos --------
 interface FormData {
@@ -34,7 +37,7 @@ interface FormData {
 
 // -------- Estilos --------
 const StyledContainer = styled(Container)(() => ({
-    minHeight: '100vh',
+    height: '100vh',
     width: '100%',
     display: 'flex',
     alignItems: 'center',
@@ -47,6 +50,8 @@ const StyledContainer = styled(Container)(() => ({
 
 const StyledCard = styled(Card)(() => ({
     borderRadius: 12,
+    maxHeight: '100vh',
+    overflowY: 'auto',
 }));
 
 const CustomStepConnector = styled(StepConnector)(({ theme }) => ({
@@ -227,7 +232,7 @@ export default function FinancialForm() {
                                 value="aposentadoria_renda_passiva"
                                 control={<Radio />}
                                 label="Garantir aposentadoria através de renda passiva de investimentos"
-                                
+
                             />
                             <FormControlLabel
                                 value="organizacao_financeira"
@@ -333,9 +338,10 @@ export default function FinancialForm() {
     const navigate = useNavigate();
     return (
         <Box>
+            <Header />
             <StyledContainer maxWidth="xl">
                 <StyledCard>
-                    <CardContent>
+                    <CardContent sx={{ p: { xs: 2, sm: 4 } }}>
                         <Typography variant="h5" fontWeight={700} gutterBottom>
                             Formulário
                         </Typography>
@@ -356,6 +362,10 @@ export default function FinancialForm() {
                                             orientation={isMobile ? 'vertical' : 'horizontal'}
                                             alternativeLabel={!isMobile}
                                             connector={!isMobile ? <CustomStepConnector /> : undefined}
+                                            sx={{
+                                                "& .MuiStepLabel-label": { fontSize: isMobile ? "0.75rem" : "1rem" },
+                                                "& .MuiStepIcon-root": { width: isMobile ? 16 : 24, height: isMobile ? 16 : 24 },
+                                            }}
                                         >
                                             {steps.map((label, index) => (
                                                 <Step key={label} completed={isStepCompleted(index)}>
@@ -372,32 +382,39 @@ export default function FinancialForm() {
                                             container
                                             spacing={2}
                                             mt={2}
-                                            sx={{ flexDirection: isMobile ? 'column-reverse' : 'row' }}
+                                            sx={{
+                                                flexDirection: isMobile ? 'row' : 'row', // sempre lado a lado
+                                                justifyContent: "space-between",
+                                                alignItems: "center",
+                                            }}
                                         >
-                                            <span>
+                                            <Button
+                                                variant="contained"
+                                                onClick={handleBack}
+                                                disabled={activeStep === 0}
+                                                sx={{ minWidth: 40 }}
+                                            >
+                                                <ArrowBackIosNewIcon />
+                                            </Button>
+
+                                            {/* Avançar ou Enviar */}
+                                            {!isLastStep ? (
                                                 <Button
-                                                    variant="text"
-                                                    color="inherit"
-                                                    onClick={handleBack}
-                                                    disabled={activeStep === 0}
-                                                    fullWidth={isMobile}
+                                                    variant="contained"
+                                                    color="primary"
+                                                    onClick={handleNext}
+                                                    sx={{ minWidth: 40 }}
                                                 >
-                                                    Voltar
+                                                    <ArrowForwardIosIcon />
                                                 </Button>
-                                            </span>
-                                            <span>
-                                                {!isLastStep ? (
-                                                    <Button variant="contained" color="primary" onClick={handleNext} fullWidth={isMobile}>
-                                                        Avançar
-                                                    </Button>
-                                                ) : (
-                                                    <Button type="submit" variant="contained" color="primary" fullWidth={isMobile}>
-                                                        Enviar
-                                                    </Button>
-                                                )}
-                                            </span>
+                                            ) : (
+                                                <Button type="submit" variant="contained" color="primary">
+                                                    Enviar
+                                                </Button>
+                                            )}
                                         </Grid>
                                     </Box>
+
                                 </Box>
                             </form>
                         ) : (
@@ -412,7 +429,7 @@ export default function FinancialForm() {
                                     <Button variant="contained" onClick={() => setActiveStep(0)}>
                                         Preencher novamente
                                     </Button>
-                                    <Button sx={{marginTop: 3}} variant="contained" onClick={() => navigate('/')}>
+                                    <Button sx={{ marginTop: 3 }} variant="contained" onClick={() => navigate('/')}>
                                         Voltar à tela inicial
                                     </Button>
                                 </Box>
@@ -421,6 +438,7 @@ export default function FinancialForm() {
                     </CardContent>
                 </StyledCard>
             </StyledContainer>
+            <Header />
         </Box>
     );
 }
