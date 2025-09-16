@@ -38,7 +38,7 @@ export function WorkPage() {
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                py: 2
+                py: 4
             }}
         >
             <Container maxWidth="xl">
@@ -60,6 +60,7 @@ export function WorkPage() {
                         sx={{
                             fontSize: { xs: "0.95rem", sm: "1rem" },
                             fontWeight: 600,
+                            color: theme.palette.secondary.main
                         }}
                     >
                         Simples e rápido para você
