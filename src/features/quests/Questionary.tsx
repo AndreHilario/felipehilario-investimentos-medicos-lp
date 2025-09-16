@@ -6,7 +6,6 @@ import {
     Card,
     CardContent,
     FormControl,
-    FormLabel,
     RadioGroup,
     FormControlLabel,
     Radio,
@@ -203,7 +202,7 @@ function FinancialForm(): JSX.Element {
      * Handler específico para o componente Slider.
      */
     const handleSliderChange = (field: 'urgencia') => (
-        event: Event | SyntheticEvent, // Evento padrão para Slider
+        _event: Event | SyntheticEvent, // Evento padrão para Slider
         newValue: number | number[] // O valor do Slider pode ser um número ou um array de números
     ): void => {
         if (typeof newValue === 'number') { // O campo urgencia espera um único número
