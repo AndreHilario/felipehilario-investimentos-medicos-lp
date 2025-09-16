@@ -4,6 +4,7 @@ import WatchLaterOutlinedIcon from '@mui/icons-material/WatchLaterOutlined';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import PeopleOutlineOutlinedIcon from "@mui/icons-material/PeopleOutlineOutlined";
 import PsychologyIcon from '@mui/icons-material/Psychology';
+import { ScheduleButton } from "../../components/ScheduleButton";
 
 export const ProblemPage = () => {
     const allProblems = [
@@ -114,7 +115,7 @@ export const ProblemPage = () => {
                                     justifyContent: "flex-start",
                                     alignItems: "center",
                                     textAlign: "center",
-                                    maxWidth: {sm: "40vw", xs: "100%"},
+                                    maxWidth: { sm: "40vw", xs: "100%" },
                                     gap: 2,
                                     borderRadius: '0.75rem',
                                     backgroundColor: "#f8fbfc",
@@ -167,7 +168,7 @@ export const ProblemPage = () => {
                         </Grid>
                     ))}
                 </Grid>
-
+                <Box sx={{mt: 6, display: "flex", justifyContent: "center"}}><ScheduleButton text={"Quero Agendar Uma Sessão"} /></Box>
 
             </Container>
         </Box>
