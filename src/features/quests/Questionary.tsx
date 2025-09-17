@@ -23,7 +23,6 @@ import { styled, useTheme } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import Header from '../../components/Header';
 
 // -------- Tipos --------
 interface FormData {
@@ -338,7 +337,6 @@ export default function FinancialForm() {
     const navigate = useNavigate();
     return (
         <Box>
-            <Header />
             <StyledContainer maxWidth="xl">
                 <StyledCard>
                     <CardContent sx={{ p: { xs: 2, sm: 4 } }}>
@@ -438,7 +436,6 @@ export default function FinancialForm() {
                     </CardContent>
                 </StyledCard>
             </StyledContainer>
-            <Header />
         </Box>
     );
 }
