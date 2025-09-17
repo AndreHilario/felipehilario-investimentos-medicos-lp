@@ -127,11 +127,11 @@ export default function FinancialForm() {
 
     const steps = useMemo(
         () => [
-            'Recursos disponíveis',
-            'Meta financeira',
-            'Desafio principal',
+            'Recursos',
+            'Objetivo',
+            'Desafio',
             'Urgência',
-            'Nome completo',
+            'Nome',
             'WhatsApp',
         ],
         []
@@ -357,12 +357,20 @@ export default function FinancialForm() {
                                     <Box sx={{ minWidth: isMobile ? '100%' : 260 }}>
                                         <Stepper
                                             activeStep={activeStep}
-                                            orientation={isMobile ? 'vertical' : 'horizontal'}
-                                            alternativeLabel={!isMobile}
-                                            connector={!isMobile ? <CustomStepConnector /> : undefined}
+                                            orientation="horizontal"
+                                            alternativeLabel
+                                            connector={<CustomStepConnector />}
                                             sx={{
+                                                flexWrap: "wrap", // permite quebrar linha
+                                                "& .MuiStep-root": {
+                                                    flexBasis: isMobile ? "30%" : "auto", // 2 por linha no mobile
+                                                    flexGrow: 1,
+                                                },
                                                 "& .MuiStepLabel-label": { fontSize: isMobile ? "0.75rem" : "1rem" },
-                                                "& .MuiStepIcon-root": { width: isMobile ? 16 : 24, height: isMobile ? 16 : 24 },
+                                                "& .MuiStepIcon-root": {
+                                                    width: isMobile ? 16 : 24,
+                                                    height: isMobile ? 16 : 24,
+                                                },
                                             }}
                                         >
                                             {steps.map((label, index) => (
@@ -371,6 +379,7 @@ export default function FinancialForm() {
                                                 </Step>
                                             ))}
                                         </Stepper>
+
                                     </Box>
 
                                     {/* Conteúdo da etapa */}
