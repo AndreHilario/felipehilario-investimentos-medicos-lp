@@ -55,7 +55,7 @@ export function BlockPage() {
             sx={{
                 p:3,
                 textAlign: "left",
-                borderRadius: "12px",
+                borderRadius: "32px",
                 border: "2px solid #95ffb0ff",
                 backgroundColor: "white",
                 transition: "transform 0.3s ease, box-shadow 0.3s ease",
