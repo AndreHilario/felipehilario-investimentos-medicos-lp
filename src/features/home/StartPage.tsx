@@ -8,7 +8,7 @@ export function StartPage() {
     return (
         <Box
             sx={{
-                backgroundImage: "linear-gradient(135deg, #a2eafeff 0%, #95ffb0ff 100%)",
+                backgroundImage: theme.palette.background?.default,
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "cover",
                 minHeight: "90vh",

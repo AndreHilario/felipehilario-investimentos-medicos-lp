@@ -2,6 +2,7 @@ import { WorkPage } from "./home/WorkPage";
 import { MainPage } from "./home/MainPage";
 import { StartPage } from "./home/StartPage";
 import { ProblemPage } from "./home/ProblemPage";
+import { BlockPage } from "./home/BlockPage";
 
 export function Index() {
     return (
@@ -9,6 +10,7 @@ export function Index() {
             <MainPage />
             <WorkPage />
             <ProblemPage />
+            <BlockPage />
             <StartPage />
         </>
     );
