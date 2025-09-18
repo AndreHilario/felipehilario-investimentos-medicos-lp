@@ -49,7 +49,7 @@ export function BlockPage() {
     const cardColumnOffset = { xs: 0, md: `${centralCircleSize.md / 2 + 20}px` }; // Meio do círculo + um pouco de espaçamento
 
     // Componente auxiliar para renderizar cada card
-    const CardItem = ({ item }) => (
+    const CardItem = ({ item }: { item: any }) => (
         <Paper
             elevation={3}
             sx={{
@@ -66,6 +66,7 @@ export function BlockPage() {
                 position: 'relative',
                 maxWidth: { xs: '100%', md: '380px' }, // Limita a largura do card
                 width: '100%',
+                height: "300px"
             }}
         >
             <Box
@@ -185,7 +186,7 @@ export function BlockPage() {
                         }}
                     >
                         {/* Coluna Esquerda (Itens 1 e 3) */}
-                        <Grid item xs={12} md={6}
+                        <Box 
                             sx={{
                                 display: 'flex',
                                 justifyContent: { xs: 'center', md: 'flex-end' }, // Centraliza no mobile, alinha à direita no desktop
@@ -195,12 +196,12 @@ export function BlockPage() {
                         >
                             <Stack spacing={4} sx={{ width: '100%', maxWidth: { xs: '400px', md: '380px' }, alignItems: { xs: 'center', md: 'flex-end' } }}>
                                 <CardItem item={items[0]} />
-                                <CardItem item={items[2]} />
+                                <CardItem item={items[1]} />
                             </Stack>
-                        </Grid>
+                        </Box>
 
                         {/* Coluna Direita (Itens 2 e 4) */}
-                        <Grid item xs={12} md={6}
+                        <Box
                             sx={{
                                 display: 'flex',
                                 justifyContent: { xs: 'center', md: 'flex-start' }, // Centraliza no mobile, alinha à esquerda no desktop
@@ -209,10 +210,10 @@ export function BlockPage() {
                             }}
                         >
                             <Stack spacing={4} sx={{ width: '100%', maxWidth: { xs: '400px', md: '380px' }, alignItems: { xs: 'center', md: 'flex-start' } }}>
-                                <CardItem item={items[1]} />
+                                <CardItem item={items[2]} />
                                 <CardItem item={items[3]} />
                             </Stack>
-                        </Grid>
+                        </Box>
                     </Grid>
 
                     {/* Linhas de Conexão (Apenas no Desktop) */}
