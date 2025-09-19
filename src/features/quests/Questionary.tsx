@@ -16,7 +16,8 @@ import {
     Step,
     StepLabel,
     StepConnector,
-    useMediaQuery
+    useMediaQuery,
+    Slider
 } from '@mui/material';
 import Check from '@mui/icons-material/Check';
 import { styled, useTheme } from '@mui/system';
@@ -29,7 +30,7 @@ interface FormData {
     investAmount: 'ate_300k' | '300k_a_1m' | '1m_a_3m' | 'acima_3m' | '';
     goal: 'reduzir_plantoes' | 'manutencao_protecao' | 'aposentadoria_renda_passiva' | 'organizacao_financeira' | '';
     challenge: string;
-    urgency: '0_4' | '5_8' | '9_10' | '';
+    urgency: number;
     fullName: string;
     whatsapp: string;
 }
@@ -146,7 +147,7 @@ export default function FinancialForm() {
         investAmount: '',
         goal: '',
         challenge: '',
-        urgency: '',
+        urgency: 0,
         fullName: '',
         whatsapp: '',
     });
@@ -265,28 +266,40 @@ export default function FinancialForm() {
                     </Box>
                 );
             case 3:
+                const marks = Array.from({ length: 11 }, (_, i) => ({
+                    value: i,
+                    label: String(i),
+                }));
+
                 return (
                     <FormControl component="fieldset" fullWidth>
                         <Typography variant="h6" mb={2}>
                             4. Em uma escala de 0 a 10, qual a urgência em resolver esse problema?
                         </Typography>
-                        <RadioGroup name="urgency" value={data.urgency} onChange={handleChange('urgency')}>
-                            <FormControlLabel
-                                value="0_4"
-                                control={<Radio />}
-                                label="0–4 (Posso esperar, ainda não é prioridade máxima)"
-                            />
-                            <FormControlLabel
-                                value="5_8"
-                                control={<Radio />}
-                                label="5–8 (É importante, mas posso me planejar com calma)"
-                            />
-                            <FormControlLabel
-                                value="9_10"
-                                control={<Radio />}
-                                label="9–10 (Preciso resolver agora, a situação está me gerando angústia ou me impedindo de progredir)"
-                            />
-                        </RadioGroup>
+
+                        <Slider
+                            value={typeof data.urgency === "number" ? data.urgency : 0}
+                            onChange={(_, newValue) => {
+                                if (typeof newValue === "number") {
+                                    setData((prev) => ({ ...prev, urgency: newValue }));
+                                }
+                            }}
+                            step={1}
+                            marks={marks}
+                            min={0}
+                            max={10}
+                            valueLabelDisplay="auto"
+                        />
+
+                        {/* Legenda */}
+                        <Box mt={2}>
+                            <Typography component="ul" variant="body2" sx={{ pl: 2, listStyleType: "disc" }}>
+                                <li>0–4 (Posso esperar, ainda não é prioridade máxima)</li>
+                                <li>5–8 (É importante, mas posso me planejar com calma)</li>
+                                <li>9–10 (Preciso resolver agora, a situação está me gerando angústia ou me impedindo de progredir)</li>
+                            </Typography>
+                        </Box>
+
                         {errors.urgency && (
                             <Typography color="error" variant="body2" mt={1}>
                                 {errors.urgency}
