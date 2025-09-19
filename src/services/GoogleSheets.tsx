@@ -1,5 +1,5 @@
-const GAS_URL = import.meta.env.VITE_GAS_URL; // coloque a URL do Web App nas envs do seu bundler
-const GAS_KEY = import.meta.env.VITE_GAS_KEY; // se usar a chave opcional
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbzAHi7q8lm8S9MqMdft3Y2D8G9qHt9mvc8edlv5xGILv8h6GnpI7LzJq_ChIPU6uP_N/exec'; // coloque a URL do Web App nas envs do seu bundler
+const GAS_KEY = 'Y2hhdmVzLWZvcnRlcw-2025-09-17-51c2'; // se usar a chave opcional
 
 export interface FormDataSheet {
     patrimonioFaixa: 'Até R$300.000' | 'De R$300.001 a R$1.000.000' | 'De R$1.000.001 a R$3.000.000' | 'Acima de R$3.000.001';
