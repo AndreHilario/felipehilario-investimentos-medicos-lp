@@ -24,6 +24,7 @@ import { styled, useTheme } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { sendToGoogleSheet } from '../../services/GoogleSheets';
 
 // -------- Tipos --------
 interface FormData {
@@ -86,6 +87,18 @@ const StepIconRoot = styled('div')<{
     ...(ownerState.completed && !ownerState.active && {
         backgroundColor: theme.palette.success.main,
     }),
+}));
+
+const CompactFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
+  marginBottom: theme.spacing(2),
+  alignItems: "flex-start",
+  minHeight: "32px", // altura menor
+  "& .MuiFormControlLabel-label": {
+    fontSize: "0.875rem", // fonte menor
+  },
+  "& .MuiRadio-root": {
+    padding: "4px", // menos espaço no radio
+  },
 }));
 
 function CustomStepIcon(props: { active?: boolean; completed?: boolean; className?: string }) {
@@ -174,20 +187,15 @@ export default function FinancialForm() {
         setActiveStep((prev) => Math.max(prev - 1, 0));
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Valida a última etapa antes de submeter
         const errs = validateStep(activeStep, data);
         setErrors(errs);
         if (Object.keys(errs).length > 0) return;
 
-        // Aqui você pode enviar para sua API
-        // fetch('/api/lead', { method: 'POST', body: JSON.stringify(data) })
-        //   .then(...)
-        //   .catch(...)
-
         console.log('Dados enviados:', data);
-        setActiveStep(steps.length); // marca como concluído
+        await sendToGoogleSheet(data);
+        setActiveStep(steps.length);
     };
 
     const renderStepContent = (index: number) => {
@@ -203,10 +211,10 @@ export default function FinancialForm() {
                             value={data.investAmount}
                             onChange={handleChange('investAmount')}
                         >
-                            <FormControlLabel value="ate_300k" control={<Radio />} label="Até R$300.000" />
-                            <FormControlLabel value="300k_a_1m" control={<Radio />} label="De R$300.001 a R$1.000.000" />
-                            <FormControlLabel value="1m_a_3m" control={<Radio />} label="De R$1.000.001 a R$3.000.000" />
-                            <FormControlLabel value="acima_3m" control={<Radio />} label="Acima de R$3.000.001" />
+                            <CompactFormControlLabel value="ate_300k" control={<Radio />} label="Até R$300.000" />
+                            <CompactFormControlLabel value="300k_a_1m" control={<Radio />} label="De R$300.001 a R$1.000.000" />
+                            <CompactFormControlLabel value="1m_a_3m" control={<Radio />} label="De R$1.000.001 a R$3.000.000" />
+                            <CompactFormControlLabel value="acima_3m" control={<Radio />} label="Acima de R$3.000.001" />
                         </RadioGroup>
                         {errors.investAmount && (
                             <Typography color="error" variant="body2" mt={1}>
@@ -222,19 +230,18 @@ export default function FinancialForm() {
                             2. Qual das seguintes metas financeiras melhor descreve seu objetivo para os próximos anos?
                         </Typography>
                         <RadioGroup name="goal" value={data.goal} onChange={handleChange('goal')}>
-                            <FormControlLabel value="reduzir_plantoes" control={<Radio />} label="Reduzir carga de plantões" />
-                            <FormControlLabel
+                            <CompactFormControlLabel value="reduzir_plantoes" control={<Radio />} label="Reduzir carga de plantões" />
+                            <CompactFormControlLabel
                                 value="manutencao_protecao"
                                 control={<Radio />}
                                 label="Manutenção e proteção do patrimônio construído"
                             />
-                            <FormControlLabel
+                            <CompactFormControlLabel
                                 value="aposentadoria_renda_passiva"
                                 control={<Radio />}
                                 label="Garantir aposentadoria através de renda passiva de investimentos"
-
                             />
-                            <FormControlLabel
+                            <CompactFormControlLabel
                                 value="organizacao_financeira"
                                 control={<Radio />}
                                 label="Se organizar financeiramente"
@@ -294,9 +301,9 @@ export default function FinancialForm() {
                         {/* Legenda */}
                         <Box mt={2}>
                             <Typography component="ul" variant="body2" sx={{ pl: 2, listStyleType: "disc" }}>
-                                <li>0–4 (Posso esperar, ainda não é prioridade máxima)</li>
-                                <li>5–8 (É importante, mas posso me planejar com calma)</li>
-                                <li>9–10 (Preciso resolver agora, a situação está me gerando angústia ou me impedindo de progredir)</li>
+                                <li style={{marginBottom: "10px"}}>0–4 (Posso esperar, ainda não é prioridade máxima)</li>
+                                <li style={{marginBottom: "10px"}}>5–8 (É importante, mas posso me planejar com calma)</li>
+                                <li style={{marginBottom: "10px"}}>9–10 (Preciso resolver agora, a situação está me gerando angústia ou me impedindo de progredir)</li>
                             </Typography>
                         </Box>
 
@@ -379,10 +386,10 @@ export default function FinancialForm() {
                                                     flexBasis: isMobile ? "30%" : "auto", // 2 por linha no mobile
                                                     flexGrow: 1,
                                                 },
-                                                "& .MuiStepLabel-label": { fontSize: isMobile ? "0.75rem" : "1rem" },
+                                                "& .MuiStepLabel-label": { fontSize: isMobile ? "0.6rem" : "1rem" },
                                                 "& .MuiStepIcon-root": {
-                                                    width: isMobile ? 16 : 24,
-                                                    height: isMobile ? 16 : 24,
+                                                    width: isMobile ? 14 : 24,
+                                                    height: isMobile ? 14 : 24,
                                                 },
                                             }}
                                         >

@@ -1,12 +1,14 @@
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbzAHi7q8lm8S9MqMdft3Y2D8G9qHt9mvc8edlv5xGILv8h6GnpI7LzJq_ChIPU6uP_N/exec'; // coloque a URL do Web App nas envs do seu bundler
-const GAS_KEY = 'Y2hhdmVzLWZvcnRlcw-2025-09-17-51c2'; // se usar a chave opcional
+import axios from 'axios'; // Você precisaria instalar o axios: npm install axios ou yarn add axios
+
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbzR8g6QyurHy5vUBSZB7ff0pm09dIkPomWPaYck-AuQ8c8EuBIesfmabmHKdTUvBLrR/exec';
+const GAS_KEY = 'Y2hhdmVzLWZvcnRlcw-2025-09-17-51c2';
 
 export interface FormDataSheet {
-    patrimonioFaixa: 'Até R$300.000' | 'De R$300.001 a R$1.000.000' | 'De R$1.000.001 a R$3.000.000' | 'Acima de R$3.000.001';
-    meta: 'Reduzir carga de plantões' | 'Manutenção e proteção do patrimônio construído' | 'Garantir aposentadoria através de renda passiva de investimentos' | 'Se organizar financeiramente';
-    desafio: string;
-    urgenciaFaixa: '0–4' | '5–8' | '9–10';
-    nomeCompleto: string;
+    investAmount: 'ate_300k' | '300k_a_1m' | '1m_a_3m' | 'acima_3m' | '';
+    goal: 'reduzir_plantoes' | 'manutencao_protecao' | 'aposentadoria_renda_passiva' | 'organizacao_financeira' | '';
+    challenge: string;
+    urgency: number;
+    fullName: string;
     whatsapp: string;
 }
 
@@ -15,20 +17,23 @@ export async function sendToGoogleSheet(data: FormDataSheet): Promise<void> {
 
     const url = GAS_KEY ? `${GAS_URL}?key=${encodeURIComponent(GAS_KEY)}` : GAS_URL;
 
-    const res = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    });
+    try {
+        const res = await axios.post(url, data, { // Axios automaticamente serializa 'data' para JSON
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
 
-    // Em Apps Script, o status HTTP pode vir sempre 200.
-    // Então verificamos o body:
-    const json = await res.json().catch(() => null);
+        const json = res.data; // Axios já entrega a resposta JSON em res.data
 
-    if (!json || json.ok !== true) {
-        const errMsg = json?.error || 'Falha ao enviar para a planilha';
-        throw new Error(errMsg);
+        if (!json || json.ok !== true) {
+            const errMsg = json?.error || 'Falha ao enviar para a planilha';
+            throw new Error(errMsg);
+        }
+    } catch (error: any) {
+        // Axios também tem um objeto de erro mais detalhado para erros de rede/HTTP
+        // Mas para erros lógicos do Apps Script (como json.ok === false), seu tratamento já é bom.
+        console.error("Erro na requisição Axios:", error);
+        throw new Error(error.response?.data?.error || error.message || 'Erro desconhecido ao enviar para a planilha');
     }
 }
