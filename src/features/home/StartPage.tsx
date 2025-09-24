@@ -11,7 +11,7 @@ export function StartPage() {
                 backgroundImage: theme.palette.background?.default,
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "cover",
-                minHeight: "90vh",
+                maxHeight: "110vh",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",

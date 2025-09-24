@@ -8,7 +8,7 @@ export function MainPage() {
         <Box
             sx={{
                 backgroundColor: theme.palette.background?.default,
-                minHeight: "110vh",
+                maxHeight: "120vh",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",

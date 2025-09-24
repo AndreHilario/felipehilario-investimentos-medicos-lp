@@ -25,7 +25,9 @@ import { useNavigate } from 'react-router-dom';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { sendToGoogleSheet } from '../../services/GoogleSheets';
-// -------- Tipos --------
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import { generateWhatsappLink } from '../../utils/sendWhatsAppMessage';
+
 export interface FormDataSheets {
     investAmount: 'ate_300k' | '300k_a_1m' | '1m_a_3m' | 'acima_3m' | '';
     goal: 'reduzir_plantoes' | 'manutencao_protecao' | 'aposentadoria_renda_passiva' | 'organizacao_financeira' | '';
@@ -52,6 +54,7 @@ const StyledCard = styled(Card)(() => ({
     borderRadius: 12,
     maxHeight: '100vh',
     overflowY: 'auto',
+    maxWidth: "90%"
 }));
 
 const CustomStepConnector = styled(StepConnector)(({ theme }) => ({
@@ -89,15 +92,15 @@ const StepIconRoot = styled('div')<{
 }));
 
 const CompactFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
-  marginBottom: theme.spacing(2),
-  alignItems: "flex-start",
-  minHeight: "32px", // altura menor
-  "& .MuiFormControlLabel-label": {
-    fontSize: "0.875rem", // fonte menor
-  },
-  "& .MuiRadio-root": {
-    padding: "4px", // menos espaço no radio
-  },
+    marginBottom: theme.spacing(2),
+    alignItems: "flex-start",
+    minHeight: "32px", // altura menor
+    "& .MuiFormControlLabel-label": {
+        fontSize: "0.875rem", // fonte menor
+    },
+    "& .MuiRadio-root": {
+        padding: "4px", // menos espaço no radio
+    },
 }));
 
 function CustomStepIcon(props: { active?: boolean; completed?: boolean; className?: string }) {
@@ -195,7 +198,7 @@ export default function FinancialForm() {
         console.log('Dados enviados:', data);
         setActiveStep(steps.length);
         await sendToGoogleSheet(data);
-        
+
     };
 
     const renderStepContent = (index: number) => {
@@ -301,9 +304,9 @@ export default function FinancialForm() {
                         {/* Legenda */}
                         <Box mt={2}>
                             <Typography component="ul" variant="body2" sx={{ pl: 2, listStyleType: "disc" }}>
-                                <li style={{marginBottom: "10px"}}>0–4 (Posso esperar, ainda não é prioridade máxima)</li>
-                                <li style={{marginBottom: "10px"}}>5–8 (É importante, mas posso me planejar com calma)</li>
-                                <li style={{marginBottom: "10px"}}>9–10 (Preciso resolver agora, a situação está me gerando angústia ou me impedindo de progredir)</li>
+                                <li style={{ marginBottom: "10px" }}>0–4 (Posso esperar, ainda não é prioridade máxima)</li>
+                                <li style={{ marginBottom: "10px" }}>5–8 (É importante, mas posso me planejar com calma)</li>
+                                <li style={{ marginBottom: "10px" }}>9–10 (Preciso resolver agora, a situação está me gerando angústia ou me impedindo de progredir)</li>
                             </Typography>
                         </Box>
 
@@ -356,116 +359,155 @@ export default function FinancialForm() {
     const finished = activeStep >= steps.length;
     const navigate = useNavigate();
     return (
-        <Box>
-            <StyledContainer maxWidth="xl">
-                <StyledCard>
-                    <CardContent sx={{ p: { xs: 2, sm: 4 } }}>
-                        <Typography variant="h5" fontWeight={700} gutterBottom>
-                            Formulário
-                        </Typography>
+        <StyledContainer maxWidth={false} disableGutters>
+            <StyledCard>
+                <CardContent sx={{ p: { xs: 2, sm: 4 } }}>
+                    <Typography variant="h5" fontWeight={700} gutterBottom>
+                        Formulário
+                    </Typography>
 
-                        {!finished ? (
-                            <form onSubmit={handleSubmit} noValidate>
-                                <Box
-                                    sx={{
-                                        display: 'flex',
-                                        flexDirection: isMobile ? 'column' : 'row',
-                                        gap: 3,
-                                    }}
-                                >
-                                    {/* Stepper */}
-                                    <Box sx={{ minWidth: isMobile ? '100%' : 260 }}>
-                                        <Stepper
-                                            activeStep={activeStep}
-                                            orientation="horizontal"
-                                            alternativeLabel
-                                            connector={<CustomStepConnector />}
-                                            sx={{
-                                                flexWrap: "wrap", // permite quebrar linha
-                                                "& .MuiStep-root": {
-                                                    flexBasis: isMobile ? "30%" : "auto", // 2 por linha no mobile
-                                                    flexGrow: 1,
-                                                },
-                                                "& .MuiStepLabel-label": { fontSize: isMobile ? "0.6rem" : "1rem" },
-                                                "& .MuiStepIcon-root": {
-                                                    width: isMobile ? 14 : 24,
-                                                    height: isMobile ? 14 : 24,
-                                                },
-                                            }}
+                    {!finished ? (
+                        <form onSubmit={handleSubmit} noValidate>
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    flexDirection: isMobile ? 'column' : 'row',
+                                    gap: 3,
+                                }}
+                            >
+                                {/* Stepper */}
+                                <Box sx={{ minWidth: isMobile ? '100%' : 260 }}>
+                                    <Stepper
+                                        activeStep={activeStep}
+                                        orientation="horizontal"
+                                        alternativeLabel
+                                        connector={<CustomStepConnector />}
+                                        sx={{
+                                            flexWrap: "wrap", // permite quebrar linha
+                                            "& .MuiStep-root": {
+                                                flexBasis: isMobile ? "30%" : "auto", // 2 por linha no mobile
+                                                flexGrow: 1,
+                                            },
+                                            "& .MuiStepLabel-label": { fontSize: isMobile ? "0.6rem" : "1rem" },
+                                            "& .MuiStepIcon-root": {
+                                                width: isMobile ? 14 : 24,
+                                                height: isMobile ? 14 : 24,
+                                            },
+                                        }}
+                                    >
+                                        {steps.map((label, index) => (
+                                            <Step key={label} completed={isStepCompleted(index)}>
+                                                <StepLabel StepIconComponent={CustomStepIcon}>{label}</StepLabel>
+                                            </Step>
+                                        ))}
+                                    </Stepper>
+
+                                </Box>
+
+                                {/* Conteúdo da etapa */}
+                                <Box sx={{ flex: 1 }}>
+                                    {renderStepContent(activeStep)}
+                                    <Grid
+                                        container
+                                        spacing={2}
+                                        mt={2}
+                                        sx={{
+                                            flexDirection: isMobile ? 'row' : 'row', // sempre lado a lado
+                                            justifyContent: "space-between",
+                                            alignItems: "center",
+                                        }}
+                                    >
+                                        <Button
+                                            variant="contained"
+                                            onClick={handleBack}
+                                            disabled={activeStep === 0}
+                                            sx={{ minWidth: 40 }}
                                         >
-                                            {steps.map((label, index) => (
-                                                <Step key={label} completed={isStepCompleted(index)}>
-                                                    <StepLabel StepIconComponent={CustomStepIcon}>{label}</StepLabel>
-                                                </Step>
-                                            ))}
-                                        </Stepper>
+                                            <ArrowBackIosNewIcon />
+                                        </Button>
 
-                                    </Box>
-
-                                    {/* Conteúdo da etapa */}
-                                    <Box sx={{ flex: 1 }}>
-                                        {renderStepContent(activeStep)}
-                                        <Grid
-                                            container
-                                            spacing={2}
-                                            mt={2}
-                                            sx={{
-                                                flexDirection: isMobile ? 'row' : 'row', // sempre lado a lado
-                                                justifyContent: "space-between",
-                                                alignItems: "center",
-                                            }}
-                                        >
+                                        {/* Avançar ou Enviar */}
+                                        {!isLastStep ? (
                                             <Button
                                                 variant="contained"
-                                                onClick={handleBack}
-                                                disabled={activeStep === 0}
+                                                color="primary"
+                                                onClick={handleNext}
                                                 sx={{ minWidth: 40 }}
                                             >
-                                                <ArrowBackIosNewIcon />
+                                                <ArrowForwardIosIcon />
                                             </Button>
+                                        ) : (
+                                            <Button type="submit" variant="contained" color="primary">
+                                                Enviar
+                                            </Button>
+                                        )}
+                                    </Grid>
+                                </Box>
 
-                                            {/* Avançar ou Enviar */}
-                                            {!isLastStep ? (
-                                                <Button
-                                                    variant="contained"
-                                                    color="primary"
-                                                    onClick={handleNext}
-                                                    sx={{ minWidth: 40 }}
-                                                >
-                                                    <ArrowForwardIosIcon />
-                                                </Button>
-                                            ) : (
-                                                <Button type="submit" variant="contained" color="primary">
-                                                    Enviar
-                                                </Button>
-                                            )}
-                                        </Grid>
+                            </Box>
+                        </form>
+                    ) : (
+                        <Box textAlign="center" py={4}>
+                            <Typography variant="h6" gutterBottom>
+                                🎉 Parabéns! Formulário concluído com sucesso.
+                            </Typography>
+                            <Typography variant="body1" color="text.secondary">
+                                Em breve entraremos em contato pelo WhatsApp informado.
+                            </Typography>
+
+                            <Box mt={4}>
+                                <Grid container spacing={2} justifyContent="center">
+                                    <Box>
+                                        <Button
+                                            fullWidth
+                                            variant="contained"
+                                            onClick={() => setActiveStep(0)}
+                                        >
+                                            Preencher novamente
+                                        </Button>
                                     </Box>
 
-                                </Box>
-                            </form>
-                        ) : (
-                            <Box textAlign="center" py={4}>
-                                <Typography variant="h6" gutterBottom>
-                                    Parabéns! Formulário concluído com sucesso.
-                                </Typography>
-                                <Typography variant="body1" color="text.secondary">
-                                    Em breve entraremos em contato pelo WhatsApp informado.
-                                </Typography>
-                                <Box mt={3}>
-                                    <Button variant="contained" onClick={() => setActiveStep(0)}>
-                                        Preencher novamente
-                                    </Button>
-                                    <Button sx={{ marginLeft: 1 }} variant="contained" onClick={() => navigate('/')}>
-                                        Voltar
-                                    </Button>
-                                </Box>
+                                    <Box>
+                                        <Button
+                                            fullWidth
+                                            variant="contained"
+                                            onClick={() => navigate("/")}
+                                        >
+                                            Voltar
+                                        </Button>
+                                    </Box>
+
+                                    <Box>
+                                        <Button
+                                            fullWidth
+                                            variant="contained"
+                                            sx={{
+                                                background: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`, // Gradiente Azul > Verde
+                                                color: "#fff", // Texto branco
+                                                transition: "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out", // Suaviza a animação de hover
+                                                boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)", // Sombra inicial
+                                                "&:hover": {
+                                                    transform: "scale(1.05)", // Leve aumento ao passar o mouse
+                                                    boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.3)", // Sombra ao passar o mouse
+                                                },
+                                            }}
+                                            startIcon={<WhatsAppIcon />}
+                                            href={generateWhatsappLink(
+                                                "5512982245338",
+                                                "Olá Felipe! Preciso falar com você de forma mais urgente."
+                                            )}
+                                            target="_blank"
+                                        >
+                                            Contato Urgente
+                                        </Button>
+                                    </Box>
+                                </Grid>
                             </Box>
-                        )}
-                    </CardContent>
-                </StyledCard>
-            </StyledContainer>
-        </Box>
+                        </Box>
+                    )}
+                </CardContent>
+            </StyledCard>
+        </StyledContainer>
     );
 }
 
