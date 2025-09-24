@@ -25,9 +25,8 @@ import { useNavigate } from 'react-router-dom';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { sendToGoogleSheet } from '../../services/GoogleSheets';
-
 // -------- Tipos --------
-interface FormData {
+export interface FormDataSheets {
     investAmount: 'ate_300k' | '300k_a_1m' | '1m_a_3m' | 'acima_3m' | '';
     goal: 'reduzir_plantoes' | 'manutencao_protecao' | 'aposentadoria_renda_passiva' | 'organizacao_financeira' | '';
     challenge: string;
@@ -111,8 +110,8 @@ function CustomStepIcon(props: { active?: boolean; completed?: boolean; classNam
 }
 
 // -------- Validação simples por etapa --------
-function validateStep(stepIndex: number, data: FormData) {
-    const errors: Partial<Record<keyof FormData, string>> = {};
+function validateStep(stepIndex: number, data: FormDataSheets) {
+    const errors: Partial<Record<keyof FormDataSheets, string>> = {};
     switch (stepIndex) {
         case 0:
             if (!data.investAmount) errors.investAmount = 'Selecione uma faixa de valor.';
@@ -156,7 +155,7 @@ export default function FinancialForm() {
     // Completed manual: somente índices menores que o ativo ficam completed
     const isStepCompleted = (index: number) => index < activeStep;
 
-    const [data, setData] = useState<FormData>({
+    const [data, setData] = useState<FormDataSheets>({
         investAmount: '',
         goal: '',
         challenge: '',
@@ -165,10 +164,10 @@ export default function FinancialForm() {
         whatsapp: '',
     });
 
-    const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
+    const [errors, setErrors] = useState<Partial<Record<keyof FormDataSheets, string>>>({});
 
     const handleChange =
-        (field: keyof FormData) =>
+        (field: keyof FormDataSheets) =>
             (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
                 setData((prev) => ({ ...prev, [field]: e.target.value as any }));
                 // Limpa erro ao digitar
@@ -194,8 +193,9 @@ export default function FinancialForm() {
         if (Object.keys(errs).length > 0) return;
 
         console.log('Dados enviados:', data);
-        await sendToGoogleSheet(data);
         setActiveStep(steps.length);
+        await sendToGoogleSheet(data);
+        
     };
 
     const renderStepContent = (index: number) => {
@@ -447,7 +447,7 @@ export default function FinancialForm() {
                         ) : (
                             <Box textAlign="center" py={4}>
                                 <Typography variant="h6" gutterBottom>
-                                    Obrigado! Recebemos suas informações.
+                                    Parabéns! Formulário concluído com sucesso.
                                 </Typography>
                                 <Typography variant="body1" color="text.secondary">
                                     Em breve entraremos em contato pelo WhatsApp informado.
@@ -456,8 +456,8 @@ export default function FinancialForm() {
                                     <Button variant="contained" onClick={() => setActiveStep(0)}>
                                         Preencher novamente
                                     </Button>
-                                    <Button sx={{ marginTop: 3 }} variant="contained" onClick={() => navigate('/')}>
-                                        Voltar à tela inicial
+                                    <Button sx={{ marginLeft: 1 }} variant="contained" onClick={() => navigate('/')}>
+                                        Voltar
                                     </Button>
                                 </Box>
                             </Box>
@@ -468,3 +468,4 @@ export default function FinancialForm() {
         </Box>
     );
 }
+
