@@ -30,7 +30,7 @@ export function WorkPage() {
     return (
         <Box
             sx={{
-                minHeight: "70vh",
+                minHeight: "80vh",
                 backgroundImage: "linear-gradient(135deg, #a2eafeff 0%, #95ffb0ff 100%)",
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "cover",
@@ -74,12 +74,12 @@ export function WorkPage() {
                                 elevation={3}
                                 sx={{
                                     p: 4,
-                                    height: "100%",
+                                    height: { sm: "100%", xs: "100%", xl: "30vh" },
                                     display: "flex",
                                     flexDirection: "column",
                                     alignItems: "center",
                                     textAlign: "center",
-                                    maxWidth: { sm: "40vw", xs: "100%" },
+                                    maxWidth: { sm: "40vw", xs: "100%", xl: "40vw" },
                                     gap: 2,
                                     borderRadius: "0.75rem",
                                     transition: "transform 0.3s ease, box-shadow 0.3s ease",

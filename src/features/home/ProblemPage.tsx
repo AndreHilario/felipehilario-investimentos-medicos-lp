@@ -110,13 +110,13 @@ export const ProblemPage = () => {
                                 elevation={3}
                                 sx={{
                                     p: 3,
-                                    height: "100%", // garante altura igual em cada linha
+                                    height: { sm: "100%", xs: "100%", xl: "30vh" },
                                     display: "flex",
                                     flexDirection: "column",
                                     justifyContent: "flex-start",
                                     alignItems: "center",
                                     textAlign: "center",
-                                    maxWidth: { sm: "40vw", xs: "100%" },
+                                    maxWidth: { sm: "40vw", xs: "100%", xl: "30vw" },
                                     gap: 2,
                                     borderRadius: '0.75rem',
                                     backgroundColor: "#f8fbfc",
