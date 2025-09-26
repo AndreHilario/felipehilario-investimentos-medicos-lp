@@ -157,7 +157,7 @@ export function MainPage() {
                                 fontWeight: 600,
                             }}
                         >
-                            Metodologia F.O.O.
+                            Metodologia F.O.C.O
                         </Box>{" "}
                         — estrutura que já concedeu autonomia real de tempo e total controle financeiro para diversos médicos como
                         você.
