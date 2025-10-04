@@ -53,7 +53,7 @@ export function MainPage() {
                         },
                     }}
                 >
-                    Construção de{" "}
+                    O Plano de{" "}
                     <Box
                         component="span"
                         sx={{
@@ -62,10 +62,10 @@ export function MainPage() {
                             WebkitTextFillColor: "transparent",
                         }}
                     >
-                        Investimentos
+                        30 Minutos{" "}
                     </Box>
-                    <br />
-                    que Trabalham pela sua{" "}
+
+                    que                     <br />Médicos Estão Usando Para{" "}
                     <Box
                         component="span"
                         sx={{
@@ -74,13 +74,12 @@ export function MainPage() {
                             WebkitTextFillColor: "transparent",
                         }}
                     >
-                        Autonomia
+                        Trabalhar Menos
                     </Box>{" "}
-                    de{" "}
                     <Box
                         component="span"
                     >
-                        Tempo e Escolha
+                        Sem Perder Renda
                     </Box>
                 </Typography>
 
@@ -98,8 +97,7 @@ export function MainPage() {
                         },
                     }}
                 >
-                    O Seu Plano de Ação para Organizar Seus Investimentos, Gerar Renda Passiva e Romper sua Dependência do
-                    Consultório...
+                    Diagnóstico Personalizado: Descubra Como Seu Patrimônio Pode Gerar a Liberdade que Você Merece
                 </Typography>
 
                 <Paper
@@ -137,8 +135,7 @@ export function MainPage() {
                         >
                             30 minutos
                         </Box>
-                        , um de nossos estrategistas especializados em resultados financeiros para médicos de alta performance irá
-                        desenhar um{" "}
+                        ,  um de nossos estrategistas especializados em resultados financeiros para médicos de alta performance irá desenhar um{" "}
                         <Box
                             component="span"
                             sx={{
@@ -148,8 +145,7 @@ export function MainPage() {
                         >
                             plano personalizado e validado
                         </Box>{" "}
-                        para reorganizar seus investimentos, definir o tempo necessário para você trabalhar meio período e assegurar
-                        o comando do seu futuro financeiro, tudo isso através da{" "}
+                        para reorganizar seus investimentos e conduzi-los para os seus{" "}
                         <Box
                             component="span"
                             sx={{
@@ -157,10 +153,8 @@ export function MainPage() {
                                 fontWeight: 600,
                             }}
                         >
-                            Metodologia F.O.C.O
-                        </Box>{" "}
-                        — estrutura que já concedeu autonomia real de tempo e total controle financeiro para diversos médicos como
-                        você.
+                            objetivos reais.
+                        </Box>
                     </Typography>
                 </Paper>
 
