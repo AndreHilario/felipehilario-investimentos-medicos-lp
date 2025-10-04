@@ -74,7 +74,7 @@ export function WorkPage() {
                                 elevation={3}
                                 sx={{
                                     p: 4,
-                                    height: { sm: "100%", xs: "100%", xl: "30vh" },
+                                    height: { sm: "100%", xs: "100%", xl: "35vh" },
                                     display: "flex",
                                     flexDirection: "column",
                                     alignItems: "center",
