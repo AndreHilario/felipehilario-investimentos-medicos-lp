@@ -1,16 +1,16 @@
 import { Box, Typography, Grid, Container, Stack, Chip, Card, useTheme } from "@mui/material";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
-import WatchLaterOutlinedIcon from '@mui/icons-material/WatchLaterOutlined';
+import AccessAlarmsIcon from '@mui/icons-material/AccessAlarms';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
-import PeopleOutlineOutlinedIcon from "@mui/icons-material/PeopleOutlineOutlined";
-import PsychologyIcon from '@mui/icons-material/Psychology';
+import PsychologyAltIcon from '@mui/icons-material/PsychologyAlt';
 import { ScheduleButton } from "../../components/ScheduleButton";
+import CalculateIcon from '@mui/icons-material/Calculate';
 
 export const ProblemPage = () => {
     const allProblems = [
         {
             id: 1,
-            icon: <WatchLaterOutlinedIcon fontSize="large" />,
+            icon: <AccessAlarmsIcon fontSize="large" />,
             title: "Rotina estressante de atendimentos e plantões",
             description:
                 "Manter seu padrão de vida ainda depende de trabalho excessivo - sem perspectiva clara de como ou quando desacelerar.",
@@ -26,14 +26,14 @@ export const ProblemPage = () => {
         },
         {
             id: 3,
-            icon: <PsychologyIcon fontSize="large" />,
+            icon: <PsychologyAltIcon fontSize="large" />,
             title: "Falta de tempo e excesso de informações",
             description: "Você até tenta estudar investimentos e seguir mentores - mas a rotina te esmaga.",
             accentColor: "rgba(246, 37, 37, 1)",
         },
         {
             id: 4,
-            icon: <PeopleOutlineOutlinedIcon fontSize="large" />,
+            icon: <CalculateIcon fontSize="large" />,
             title: "Soluções financeiras genéricas",
             description:
                 "Você até tem um gerente ou um assessor, mas a abordagem é superficial e pouco específica.",
@@ -116,7 +116,7 @@ export const ProblemPage = () => {
                                     justifyContent: "flex-start",
                                     alignItems: "center",
                                     textAlign: "center",
-                                    maxWidth: { sm: "40vw", xs: "100%", xl: "30vw" },
+                                    maxWidth: { sm: "40vw", xs: "100%", xl: "40vw" },
                                     gap: 2,
                                     borderRadius: '0.75rem',
                                     backgroundColor: "#f8fbfc",
