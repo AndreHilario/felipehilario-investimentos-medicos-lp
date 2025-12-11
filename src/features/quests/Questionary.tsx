@@ -195,7 +195,7 @@ export default function FinancialForm() {
 
         console.log('Dados enviados:', data);
         setActiveStep(steps.length);
-        navigate("/sucesso");
+        navigate("/obrigado");
         await sendToGoogleSheet(data);
 
     };
