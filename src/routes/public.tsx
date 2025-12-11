@@ -12,7 +12,7 @@ export const publicRoutes = [
     element: <FinancialForm />,
   },
   {
-    path: "/sucesso",
+    path: "/obrigado",
     element: <Success />,
   },
 ];
