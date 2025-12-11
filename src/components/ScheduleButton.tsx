@@ -10,7 +10,7 @@ export const ScheduleButton: React.FC<ScheduleButtonProps> = ({ text }) => {
   const navigate = useNavigate();
 
   function redirect() {
-    navigate("/questionary");
+    navigate("/agendamento");
   }
   return (
     <Button

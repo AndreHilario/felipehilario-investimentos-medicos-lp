@@ -1,6 +1,6 @@
 import { Index } from "../features/Index";
 import FinancialForm from "../features/quests/Questionary";
-
+import Success  from "../features/congratulations/Success";
 
 export const publicRoutes = [
   {
@@ -8,7 +8,11 @@ export const publicRoutes = [
     element: <Index />,
   },
   {
-    path: "/questionary",
+    path: "/agendamento",
     element: <FinancialForm />,
+  },
+  {
+    path: "/sucesso",
+    element: <Success />,
   },
 ];

@@ -5,7 +5,7 @@ export function BlockPage() {
     const navigate = useNavigate();
 
     function redirect() {
-        navigate("/questionary");
+        navigate("/agendamento");
     }
     const items = [
         {
