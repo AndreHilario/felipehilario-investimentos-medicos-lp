@@ -3,13 +3,13 @@ import { createTheme } from "@mui/material";
 // 1. Defina as cores da imagem como variáveis para facilitar a referência
 const colors = {
   textPrimary: "#263c5d", // Azul escuro/Chumbo para títulos e texto principal
-  textSecondary: "#667786", // Cinza para subtítulos
+  textSecondary: "#797979", // Cinza para subtítulos
   accentGreen: '#54d67f', // Verde para "Investimentos" e "Tempo e Escolha"
   accentBlue: "#2196F3", // Azul para "Autonomia" e texto destacado
-  backgroundLight: "#fdfdfcff", // Cor de fundo da página
+  backgroundLight: "#fff", // Cor de fundo da página
   chipBackground: "#fdf4ceff", // Fundo da tag "Exclusivo"
   chipText: "#424242", // Texto e ícone da tag "Exclusivo"
-  whitePaper: "#eff4f4ff", // Fundo da caixa de informações
+  whitePaper: "#f1ffff", // Fundo da caixa de informações
 };
 
 export const muiComponents = createTheme({

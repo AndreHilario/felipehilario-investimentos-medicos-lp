@@ -1,18 +1,19 @@
-import { WorkPage } from "./home/WorkPage";
 import { MainPage } from "./home/MainPage";
-import { StartPage } from "./home/StartPage";
 import { ProblemPage } from "./home/ProblemPage";
 import { BlockPage } from "./home/BlockPage";
 import { Footer } from "../components/Footer";
+import { QuestionsFAQPage } from "./home/QuestionsFAQPage";
+import { PersonalInfoPage } from "./home/PersonalInfoPage";
 
 export function Index() {
     return (
         <>
             <MainPage />
-            <WorkPage />
-            <ProblemPage />
             <BlockPage />
-            <StartPage />
+            <ProblemPage />
+            <PersonalInfoPage />
+            <QuestionsFAQPage />
+            {/* <StartPage /> */}
             <Footer />
         </>
     );

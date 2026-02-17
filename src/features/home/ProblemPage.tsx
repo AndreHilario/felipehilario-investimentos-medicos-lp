@@ -1,176 +1,215 @@
-import { Box, Typography, Grid, Container, Stack, Chip, Card, useTheme } from "@mui/material";
-import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
-import AccessAlarmsIcon from '@mui/icons-material/AccessAlarms';
-import TrendingDownIcon from '@mui/icons-material/TrendingDown';
-import PsychologyAltIcon from '@mui/icons-material/PsychologyAlt';
-import { ScheduleButton } from "../../components/ScheduleButton";
-import CalculateIcon from '@mui/icons-material/Calculate';
+import {
+    Box,
+    Typography,
+    Container,
+    Stack,
+    useTheme,
+    Divider,
+} from "@mui/material";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 export const ProblemPage = () => {
-    const allProblems = [
-        {
-            id: 1,
-            icon: <AccessAlarmsIcon fontSize="large" />,
-            title: "Rotina estressante de atendimentos e plantões",
-            description:
-                "Manter seu padrão de vida ainda depende de trabalho excessivo - sem perspectiva clara de como ou quando desacelerar.",
-            accentColor: "rgba(246, 37, 37, 1)",
-        },
-        {
-            id: 2,
-            icon: <TrendingDownIcon fontSize="large" />,
-            title: 'Patrimônio "parado" em investimentos sem direção',
-            description:
-                "Patrimônio construído com dedicação está disperso e perdendo oportunidades - e isso tira seu sono.",
-            accentColor: "rgba(246, 37, 37, 1)",
-        },
-        {
-            id: 3,
-            icon: <PsychologyAltIcon fontSize="large" />,
-            title: "Falta de tempo e excesso de informações",
-            description: "Você até tenta estudar investimentos e seguir mentores - mas a rotina te esmaga.",
-            accentColor: "rgba(246, 37, 37, 1)",
-        },
-        {
-            id: 4,
-            icon: <CalculateIcon fontSize="large" />,
-            title: "Soluções financeiras genéricas",
-            description:
-                "Você até tem um gerente ou um assessor, mas a abordagem é superficial e pouco específica.",
-            accentColor: "rgba(246, 37, 37, 1)",
-        },
-    ];
     const theme = useTheme();
+
+    const entregas = [
+        "5 a 8 reuniões iniciais estratégicas",
+        "Apoio de especialistas (seguros, internacional, crédito, renda variável, consórcio, planejamento)",
+        "Mapa completo da vida financeira atual",
+        "Simulações claras de carteira",
+        "Projeção objetiva de quando pode desacelerar ou aposentar",
+        "Revisões estratégicas a cada 2–3 meses",
+        "Suporte direto via WhatsApp",
+    ];
+
+    const garantias = [
+        "Fluxo claro",
+        "Proteções estruturadas",
+        "Estratégia definida",
+        "Objetivos financeiros estabelecidos",
+    ];
+
+    const gradient =
+        "linear-gradient(135deg, rgb(82, 214, 250) 0%, rgb(82, 255, 125) 100%)";
+
     return (
         <Box
             sx={{
-                minHeight: "100vh",
-                backgroundColor: theme.palette.background?.default,
-                py: 4,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                position: 'relative',
-                overflowX: 'hidden',
+                py: { xs: 6, md: 10 },
+                background: `linear-gradient(
+                    180deg,
+                    ${theme.palette.background.default} 0%,
+                    ${theme.palette.background.paper} 100%
+                )`,
             }}
         >
-            <Container
-                maxWidth="xl"
-            >
-                <Box sx={{ textAlign: "center", mb: 6 }}>
-                    <Chip
-                        icon={<ErrorOutlineOutlinedIcon />}
-                        label="O Problema Real"
-                        sx={{
-                            backgroundColor: 'rgba(244, 67, 54, 0.1)',
-                            color: 'rgb(244, 67, 54)',
-                            '& .MuiChip-icon': {
-                                color: 'rgb(244, 67, 54)',
-                            },
-                            mb: 4,
-                            fontWeight: 600,
-                            fontSize: '0.875rem'
-                        }}
-                    />
-                    <Typography
-                        variant="h4"
-                        component="h2"
-                        sx={{
-                            fontWeight: 700,
-                            mb: 2,
-                            fontSize: { xs: "1.8rem", md: "2.5rem" },
-                            color: 'rgb(45, 55, 72)',
-                            letterSpacing: '-0.025em',
-                            lineHeight: 1.2
-                        }}
-                    >
-                        Você já tem patrimônio. Faturamento alto.
-                    </Typography>
-                    <Typography
-                        variant="body1"
-                        sx={{
-                            fontSize: { xs: "1rem", md: "1.125rem" },
-                            mt: 4,
-                            color: "rgb(108, 122, 137)",
-                        }}
-                    >
-                        Mas seu futuro financeiro ainda está atrelado à:
-                    </Typography>
-                </Box>
+            <Container maxWidth="xl">
+                <Stack spacing={8}>
 
-                <Grid
-                    container
-                    spacing={4}
-                    justifyContent="center"
-                    alignItems="stretch" // força todos os itens a esticarem para a mesma altura
-                >
-                    {allProblems.map((problem) => (
-                        <>
-                            <Card
-                                elevation={3}
+                    <Stack spacing={3} textAlign="center">
+                        <Typography
+                            fontSize="0.85rem"
+                            fontWeight={700}
+                            letterSpacing={2}
+                            color="text.secondary"
+                        >
+                            O QUE É, NA PRÁTICA
+                        </Typography>
+
+                        <Typography
+                            fontSize={{ xs: "1.8rem", md: "2.5rem" }}
+                            fontWeight={700}
+                            lineHeight={1.2}
+                        >
+                            Uma{" "}
+                            <Box
+                                component="span"
                                 sx={{
-                                    p: 3,
-                                    height: { sm: "100%", xs: "100%", xl: "30vh" },
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    justifyContent: "flex-start",
-                                    alignItems: "center",
-                                    textAlign: "center",
-                                    maxWidth: { sm: "40vw", xs: "100%", xl: "40vw" },
-                                    gap: 2,
-                                    borderRadius: '0.75rem',
-                                    backgroundColor: "#f8fbfc",
-                                    transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                                    "&:hover": {
-                                        transform: "translateY(-6px)",
-                                        boxShadow: "0px 8px 20px rgba(255, 47, 47, 1)",
-                                    },
+                                    background: gradient,
+                                    WebkitBackgroundClip: "text",
+                                    WebkitTextFillColor: "transparent",
                                 }}
                             >
-                                <Box
-                                    sx={{
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        width: 70,
-                                        height: 70,
-                                        backgroundColor: "rgba(246, 37, 37, 0.1)",
-                                        color: problem.accentColor,
-                                        borderRadius: "50%",
-                                        fontSize: 30,
-                                    }}
-                                >
-                                    {problem.icon}
-                                </Box>
+                                assessoria financeira 1:1
+                            </Box>{" "}
+                            contínua e personalizada, focada em planejamento
+                            de vida — não em produtos.
+                        </Typography>
+                    </Stack>
 
-                                <Stack spacing={1} sx={{ flexGrow: 1 }}>
-                                    <Typography
-                                        variant="h6"
-                                        fontWeight={600}
-                                        sx={{
-                                            color: "rgb(45, 55, 72)",
-                                            fontSize: "1.125rem",
-                                        }}
+                    <Box
+                        sx={{
+                            display: "flex",
+                            flexDirection: { xs: "column", md: "row" },
+                            gap: { xs: 6, md: 6 },
+                        }}
+                    >
+                        <Box
+                            flex={1}
+                            sx={{
+                                p: { xs: 4, md: 5 },
+                                borderRadius: 5,
+                                background: "white",
+                                boxShadow: "0 20px 60px rgba(0,0,0,0.06)",
+                            }}
+                        >
+                            <Typography
+                                fontSize="0.9rem"
+                                fontWeight={700}
+                                letterSpacing={1}
+                                color="text.secondary"
+                                mb={3}
+                            >
+                                VOCÊ RECEBE
+                            </Typography>
+
+                            <Box
+                                sx={{
+                                    display: "grid",
+                                    gridTemplateColumns: {
+                                        xs: "1fr",
+                                        md: "1fr 1fr",
+                                    },
+                                    gap: 3,
+                                }}
+                            >
+                                {entregas.map((item, index) => (
+                                    <Stack
+                                        key={index}
+                                        direction="row"
+                                        spacing={2}
+                                        alignItems="flex-start"
                                     >
-                                        {problem.title}
+                                        <CheckCircleOutlineIcon
+                                            sx={{
+                                                color:
+                                                    theme.palette.primary.main,
+                                                mt: "3px",
+                                            }}
+                                        />
+                                        <Typography fontSize="0.95rem">
+                                            {item}
+                                        </Typography>
+                                    </Stack>
+                                ))}
+                            </Box>
+
+                            <Divider sx={{ my: 4 }} />
+
+                            <Stack spacing={1}>
+                                <Typography fontWeight={600}>
+                                    👉 Você foca na medicina.
+                                </Typography>
+                                <Typography fontWeight={600}>
+                                    👉 A estratégia financeira é construída e acompanhada.
+                                </Typography>
+                            </Stack>
+                        </Box>
+
+                        <Box
+                            flex={1}
+                            sx={{
+                                p: { xs: 4, md: 6 },
+                                borderRadius: 6,
+                                background: gradient,
+                                color: "white",
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "space-between",
+                            }}
+                        >
+                            <Stack spacing={4}>
+                                <Stack spacing={2}>
+                                    <Typography
+                                        fontSize="0.85rem"
+                                        fontWeight={700}
+                                        letterSpacing={2}
+                                        sx={{ opacity: 0.85 }}
+                                    >
+                                        GARANTIA DE PROCESSO
                                     </Typography>
+
                                     <Typography
-                                        variant="body2"
-                                        sx={{
-                                            color: "rgb(74, 85, 104)",
-                                            fontSize: "0.9375rem",
-                                            lineHeight: 1.5,
-                                        }}
+                                        fontSize={{ xs: "1.5rem", md: "2rem" }}
+                                        fontWeight={700}
                                     >
-                                        {problem.description}
+                                        Em até 90 dias, você terá:
                                     </Typography>
                                 </Stack>
-                            </Card>
-                        </>
-                    ))}
-                </Grid>
-                <Box sx={{mt: 6, display: "flex", justifyContent: "center"}}><ScheduleButton text={"Quero Agendar Uma Sessão"} /></Box>
 
+                                <Stack spacing={2}>
+                                    {garantias.map((item, index) => (
+                                        <Typography
+                                            key={index}
+                                            fontWeight={600}
+                                        >
+                                            • {item}
+                                        </Typography>
+                                    ))}
+                                </Stack>
+
+                                <Divider
+                                    sx={{
+                                        borderColor:
+                                            "rgba(255,255,255,0.25)",
+                                    }}
+                                />
+
+                                <Stack spacing={1}>
+                                    <Typography fontWeight={600}>
+                                        Se isso não acontecer, o processo não foi concluído.
+                                    </Typography>
+                                    <Typography sx={{ opacity: 0.9 }}>
+                                        Aqui não se promete ganho.
+                                    </Typography>
+                                    <Typography fontWeight={700}>
+                                        Se entrega clareza, estrutura e melhores decisões.
+                                    </Typography>
+                                </Stack>
+                            </Stack>
+                        </Box>
+                    </Box>
+
+                </Stack>
             </Container>
         </Box>
     );

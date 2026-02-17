@@ -1,59 +1,78 @@
-import { Box, Typography, Container, Paper, Chip, useTheme } from "@mui/material";
+import {
+    Box,
+    Typography,
+    Container,
+    Stack,
+    Chip,
+    useTheme,
+} from "@mui/material";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
-import { ScheduleButton } from "../../components/ScheduleButton";
+import { CTAButton } from "../../components/CTAButton";
 
 export function MainPage() {
     const theme = useTheme();
+
     return (
         <Box
             sx={{
-                backgroundColor: theme.palette.background?.default,
-                maxHeight: "120vh",
+                minHeight: "100vh",
+                background: `linear-gradient(
+          180deg,
+          ${theme.palette.background.default} 0%,
+          ${theme.palette.background.paper} 100%
+        )`,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                py: theme.spacing(4),
+                py: { xs: 2, md: 4 },
+                px: 2,
             }}
         >
-            <Container maxWidth="lg" sx={{ marginBottom: 4 }}>
-                <Box sx={{ textAlign: "center", mb: theme.spacing(3) }}>
+            <Container maxWidth="lg">
+                <Box sx={{ textAlign: "center", mb: 4 }}>
                     <Chip
-                        icon={<CheckCircleOutlineOutlinedIcon />}
-                        label={
-                            <Typography
-                                variant="body1"
-                                sx={{
-                                    whiteSpace: "normal",
-                                    textAlign: "center",
-                                    lineHeight: 1.3,
-                                }}
-                            >
-                                Exclusivo para Médicos Especialistas
-                            </Typography>
-                        }
+                        label="Exclusivo para Médicos Especialistas"
                         sx={{
-                            height: "auto",
+                            fontWeight: 600,
+                            px: 1,
                             py: 1,
-                            px: 2,
+                            height: "auto",
+                            borderRadius: 5,
+                            alignItems: "flex-start",
+                            backgroundColor: theme.palette.background.paper,
+                            border: `1px solid ${theme.palette.divider}`,
+
+                            "& .MuiChip-label": {
+                                whiteSpace: "normal",
+                                display: "block",
+                                textAlign: "center",
+                                lineHeight: 1.3,
+                                paddingTop: "3px",
+                                paddingBottom: "3px",
+                            },
                         }}
                     />
                 </Box>
+
+
                 <Typography
                     variant="h1"
                     component="h1"
                     sx={{
                         textAlign: "center",
-                        mb: theme.spacing(2),
+                        mb: 3,
                         lineHeight: 1.2,
+                        fontWeight: 700,
+                        letterSpacing: "-0.02em",
                         fontSize: {
-                            xs: '1.4rem',
-                            sm: '1.5rem',
-                            md: '2rem',
-                            lg: '2.5rem',
+                            xs: "1.6rem",
+                            sm: "2rem",
+                            md: "2.6rem",
+                            lg: "3rem",
                         },
                     }}
                 >
-                    O Plano de{" "}
+                    O dia em que o trabalho deixa de ser{" "}
                     <Box
                         component="span"
                         sx={{
@@ -62,10 +81,9 @@ export function MainPage() {
                             WebkitTextFillColor: "transparent",
                         }}
                     >
-                        30 Minutos{" "}
+                        obrigação{" "}
                     </Box>
-
-                    que                     <br />Médicos Estão Usando Para{" "}
+                    e vira{" "}
                     <Box
                         component="span"
                         sx={{
@@ -74,12 +92,7 @@ export function MainPage() {
                             WebkitTextFillColor: "transparent",
                         }}
                     >
-                        Trabalhar Menos
-                    </Box>{" "}
-                    <Box
-                        component="span"
-                    >
-                        Sem Perder Renda
+                        escolha.
                     </Box>
                 </Typography>
 
@@ -87,96 +100,124 @@ export function MainPage() {
                     variant="h6"
                     sx={{
                         textAlign: "center",
-                        mb: theme.spacing(4),
-                        maxWidth: "md",
+                        mb: 6,
+                        maxWidth: 800,
                         mx: "auto",
+                        lineHeight: 1.6,
                         fontSize: {
-                            xs: '0.9rem',
-                            sm: '1rem',
-                            lg: '1rem',
+                            xs: "0.95rem",
+                            sm: "1.05rem",
                         },
                     }}
                 >
-                    Diagnóstico Personalizado: Descubra Como Seu Patrimônio Pode Gerar a Liberdade que Você Merece
+                    Uma assessoria financeira feita para médicos que querem saber{" "}
+                    <Box component="span" sx={{ fontWeight: 800 }}>
+                        exatamente quando podem desacelerar,
+                    </Box>{" "}
+                    sem estudar investimentos, sem depender de gerente de banco e sem decisões no achismo.
                 </Typography>
 
-                <Paper
-                    elevation={3}
+                <Box
                     sx={{
-                        p: { xs: theme.spacing(3), sm: theme.spacing(4), md: theme.spacing(5) },
+                        maxWidth: 1000,
                         mx: "auto",
-                        cursor: "pointer",
-                        transition: "transform 0.3s ease, box-shadow 0.3s ease", // Propriedades que serão animadas
-                        '&:hover': {
-                            transform: "translateY(-8px)", // Leve movimento para cima
-                            boxShadow: `0px 8px 16px ${theme.palette.grey[300]}`, // Sombra mais intensa
-                        },
-                        '&:active': {
-                            transform: "scale(0.9)", // Pequeno efeito de "aperto" ao clicar
-                        }
+                        p: { xs: 3, md: 3 },
+                        borderRadius: 4,
+                        backgroundColor: "rgba(255,255,255,0.6)",
+                        backdropFilter: "blur(8px)",
+                        border: `1px solid ${theme.palette.divider}`,
+                        boxShadow: "0 10px 40px rgba(0,0,0,0.05)",
                     }}
                 >
-                    <Typography variant="body1"
+                    <Typography
+                        variant="h6"
                         sx={{
-                            fontSize: {
-                                xs: '0.9rem',
-                                sm: '1rem',
-                                textAlign: "center"
-                            }
+                            fontWeight: 600,
+                            mb: 4,
+                            textAlign: "center",
                         }}
                     >
-                        Em{" "}
-                        <Box
-                            component="span"
-                            sx={{
-                                color: theme.palette.primary.main,
-                                fontWeight: 600,
-                            }}
-                        >
-                            30 minutos
-                        </Box>
-                        ,  um de nossos estrategistas especializados em resultados financeiros para médicos de alta performance irá desenhar um{" "}
-                        <Box
-                            component="span"
-                            sx={{
-                                color: theme.palette.primary.main,
-                                fontWeight: 600,
-                            }}
-                        >
-                            plano personalizado e validado
-                        </Box>{" "}
-                        para reorganizar seus investimentos e conduzi-los para os seus{" "}
-                        <Box
-                            component="span"
-                            sx={{
-                                color: theme.palette.secondary.main,
-                                fontWeight: 600,
-                            }}
-                        >
-                            objetivos reais.
-                        </Box>
+                        Ao longo desta página, você vai entender:
                     </Typography>
-                </Paper>
 
+                    <Stack spacing={1}>
+                        {[
+                            "Por que ganhar bem não garante liberdade",
+                            "O erro silencioso que faz médicos trabalharem até mais tarde do que precisam",
+                            "Como transformar investimentos espalhados em uma estratégia clara de vida",
+                            "E como saber, com números, quando você pode reduzir o ritmo ou parar",
+                        ].map((item, index) => (
+                            <Box
+                                key={index}
+                                sx={{
+                                    display: "flex",
+                                    alignItems: "flex-start",
+                                    p: 1.5,
+                                    borderRadius: 2,
+                                    transition: "all 0.3s ease",
+                                    "&:hover": {
+                                        backgroundColor: theme.palette.action.hover,
+                                        transform: "translateX(4px)",
+                                    },
+                                }}
+                            >
+                                <CheckCircleOutlineOutlinedIcon
+                                    sx={{
+                                        color: theme.palette.primary.main,
+                                        mr: 1.5,
+                                        mt: "3px",
+                                    }}
+                                />
+                                <Typography variant="body1" sx={{ lineHeight: 1.6 }}>
+                                    {item}
+                                </Typography>
+                            </Box>
+                        ))}
+                    </Stack>
+
+                    <Box sx={{ mt: 5, textAlign: "center" }}>
+                        <Typography
+                            variant="h5"
+                            sx={{
+                                fontWeight: 800,
+                                lineHeight: 1.4,
+                            }}
+                        >
+                            Não é só sobre rentabilidade.
+                        </Typography>
+
+                        <Typography
+                            variant="h5"
+                            mt={1}
+                            sx={{
+                                fontWeight: 800,
+                                background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+                                WebkitBackgroundClip: "text",
+                                WebkitTextFillColor: "transparent",
+                            }}
+                        >
+                            É sobre decisão, estratégia e segurança.
+                        </Typography>
+                    </Box>
+                </Box>
             </Container>
-            <ScheduleButton text={"Quero Agendar Uma Sessão"} />
-            <Typography
-                component="span"
-                maxWidth={"md"}
-                sx={{
-                    color: theme.palette.text.secondary,
-                    textAlign: "center",
-                    mt: 2,
-                    px: 2,
-                    fontSize: {
-                        xs: '0.8rem',
-                        sm: '0.9rem',
-                    }
-                }}
-            >
-                Você vai preenhcer alguns dados simples e um especialista treinado vai entrar em contato com você
-                para marcar seu diagnóstico.
-            </Typography>{" "}
+
+            <Box sx={{ mt: 4, textAlign: "center" }}>
+                <CTAButton text={"Quero clareza sobre quando posso desacelerar"} message={"Olá Felipe! Quero maior clareza sobre quando posso desacelerar."} />
+
+                <Typography
+                    sx={{
+                        color: theme.palette.text.secondary,
+                        mt: 2,
+                        fontSize: {
+                            xs: "0.8rem",
+                            sm: "0.9rem",
+                        },
+                    }}
+                >
+                    (sem compromisso • conversa estratégica)
+                </Typography>
+            </Box>
         </Box>
     );
 }
