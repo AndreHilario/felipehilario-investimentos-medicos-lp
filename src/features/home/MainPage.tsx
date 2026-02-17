@@ -17,15 +17,14 @@ export function MainPage() {
             sx={{
                 minHeight: "100vh",
                 background: `linear-gradient(
-          180deg,
-          ${theme.palette.background.default} 0%,
-          ${theme.palette.background.paper} 100%
-        )`,
+                180deg,
+                ${theme.palette.background.default} 0%,
+                ${theme.palette.background.paper} 100%
+                )`,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 py: { xs: 2, md: 4 },
-                px: 2,
             }}
         >
             <Container maxWidth="lg">
@@ -119,7 +118,6 @@ export function MainPage() {
 
                 <Box
                     sx={{
-                        maxWidth: 1000,
                         mx: "auto",
                         p: { xs: 3, md: 3 },
                         borderRadius: 4,
@@ -202,7 +200,7 @@ export function MainPage() {
                 </Box>
             </Container>
 
-            <Box sx={{ mt: 4, textAlign: "center" }}>
+            <Box sx={{ mt: 4, textAlign: "center", px: 2 }}>
                 <CTAButton text={"Quero clareza sobre quando posso desacelerar"} message={"Olá Felipe! Quero maior clareza sobre quando posso desacelerar."} />
 
                 <Typography

@@ -14,7 +14,7 @@ export const PersonalInfoPage = () => {
     return (
         <Box
             sx={{
-                py: 6,
+                py: 4,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",

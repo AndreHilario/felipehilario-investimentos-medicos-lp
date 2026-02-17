@@ -16,7 +16,7 @@ export const Footer = () => {
                 bgcolor: "background.defalut",
             }}
         >
-            <Box sx={{ maxWidth: 1200, mx: "auto", px: 3, py: 5 }}>
+            <Box sx={{ maxWidth: 1200, mx: "auto", px: 3, py: 3 }}>
                 <Stack
                     direction={{ xs: "column", md: "row" }}
                     justifyContent="space-between"

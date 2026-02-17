@@ -132,7 +132,7 @@ export function BlockPage() {
                     ${theme.palette.background.default} 0%,
                     ${theme.palette.background.paper} 100%
                 )`,
-                py: 6,
+                py: 4,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -166,7 +166,7 @@ export function BlockPage() {
                             alignItems: "center",
                             justifyContent: "center",
                             textAlign: "center",
-                            boxShadow: "0 20px 50px rgba(0,0,0,.25)",
+                            boxShadow: "0 10px 25px rgba(0,0,0,.15)",
                             zIndex: 2,
                             p: 3,
                             order: { xs: 1, md: 0 },
@@ -176,7 +176,7 @@ export function BlockPage() {
                             <Typography
                                 fontWeight={800}
                                 color="#000"
-                                fontSize={{ xs: "1.1rem", md: "1.3rem" }}
+                                fontSize={{ xs: "1.3rem", md: "1.3rem" }}
                             >
                                 COMO O MÉTODO FUNCIONA NA PRÁTICA
                             </Typography>
@@ -203,7 +203,7 @@ export function BlockPage() {
 
                             <Typography
                                 fontWeight={600}
-                                fontSize={{ xs: "1rem", md: "1.1rem" }}
+                                fontSize={{ xs: "1.1rem", md: "1.1rem" }}
                                 color="white"
                                 sx={{ lineHeight: 1.4, fontStyle: "italic" }}
                             >

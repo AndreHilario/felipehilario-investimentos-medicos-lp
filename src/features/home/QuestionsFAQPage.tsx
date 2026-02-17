@@ -51,11 +51,9 @@ export const QuestionsFAQPage = () => {
                     ${theme.palette.background.default} 0%,
                     ${theme.palette.background.paper} 100%
                 )`,
-                py: 6,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                px: 2,
             }}
         >
             <Container maxWidth="xl">
@@ -67,12 +65,7 @@ export const QuestionsFAQPage = () => {
                             fontWeight={800}
                             lineHeight={1.2}
                         >
-                            FAQ –{" "}
-                            <Box
-                                component="span"
-                            >
-                                Perguntas frequentes
-                            </Box>
+                            FAQ
                         </Typography>
                     </Stack>
 
@@ -117,7 +110,7 @@ export const QuestionsFAQPage = () => {
 
                 </Stack>
             </Container>
-            <Box sx={{ mt: 6, textAlign: "center" }}>
+            <Box sx={{ mt: 6, textAlign: "center", px: 2 }}>
                 <CTAButton
                     text="Quero saber quando posso desacelerar com segurança"
                     message="Olá Felipe! Quero saber quando posso desacelerar com segurança"

@@ -7,6 +7,7 @@ import {
     Divider,
 } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import { CTAButton } from "../../components/CTAButton";
 
 export const ProblemPage = () => {
     const theme = useTheme();
@@ -34,7 +35,10 @@ export const ProblemPage = () => {
     return (
         <Box
             sx={{
-                py: { xs: 6, md: 10 },
+                py: 4,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
                 background: `linear-gradient(
                     180deg,
                     ${theme.palette.background.default} 0%,
@@ -43,7 +47,7 @@ export const ProblemPage = () => {
             }}
         >
             <Container maxWidth="xl">
-                <Stack spacing={8}>
+                <Stack spacing={4}>
 
                     <Stack spacing={3} textAlign="center">
                         <Typography
@@ -211,6 +215,12 @@ export const ProblemPage = () => {
 
                 </Stack>
             </Container>
+            <Box sx={{ mt: 6, textAlign: "center" }}>
+                <CTAButton
+                    text="Vamos começar"
+                    message="Olá Felipe! Vamos começar"
+                />
+            </Box>
         </Box>
     );
 };
