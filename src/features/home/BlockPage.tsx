@@ -175,7 +175,7 @@ export function BlockPage() {
                         <Stack spacing={2} alignItems="center">
                             <Typography
                                 fontWeight={800}
-                                color="#000"
+                                color="#0D2B45"
                                 fontSize={{ xs: "1.3rem", md: "1.3rem" }}
                             >
                                 COMO O MÉTODO FUNCIONA NA PRÁTICA
@@ -190,13 +190,13 @@ export function BlockPage() {
                             </Typography>
 
                             <Stack spacing={0.5}>
-                                <Typography fontSize="0.85rem" color="black">
+                                <Typography fontSize="0.85rem" color="#0D2B45">
                                     • Ganha bem,
                                 </Typography>
-                                <Typography fontSize="0.85rem" color="black">
+                                <Typography fontSize="0.85rem" color="#0D2B45">
                                     • Investe todo mês,
                                 </Typography>
-                                <Typography fontSize="0.85rem" color="black">
+                                <Typography fontSize="0.85rem" color="#0D2B45">
                                     • Mas não sabe responder a pergunta mais importante da carreira:
                                 </Typography>
                             </Stack>
@@ -213,7 +213,7 @@ export function BlockPage() {
                             <Typography
                                 fontSize="1.05rem"
                                 fontWeight={800}
-                                color="black"
+                                color="#0D2B45"
                             >
                                 O método F.O.C.O.® resolve isso em quatro etapas claras
                             </Typography>
