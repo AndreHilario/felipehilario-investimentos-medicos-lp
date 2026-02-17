@@ -53,7 +53,7 @@ export function WorkPage() {
                             color: "rgb(45, 55, 72)",
                         }}
                     >
-                        DEMONSTRAÇÃO — COMO O MÉTODO FUNCIONA NA PRÁTICA
+                        Como funciona?
                     </Typography>
                     <Typography
                         variant="body1"
