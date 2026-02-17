@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from "react";
 import {
     Container,
     Box,
@@ -11,441 +11,388 @@ import {
     Radio,
     TextField,
     Button,
-    Grid,
-    Stepper,
-    Step,
-    StepLabel,
-    StepConnector,
-    useMediaQuery,
-    Slider
-} from '@mui/material';
-import Check from '@mui/icons-material/Check';
-import { styled, useTheme } from '@mui/system';
-import { useNavigate } from 'react-router-dom';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { sendToGoogleSheet } from '../../services/GoogleSheets';
+    Slider,
+    Divider,
+} from "@mui/material";
+import { styled } from "@mui/system";
+import { useNavigate } from "react-router-dom";
+import { sendToGoogleSheet } from "../../services/GoogleSheets";
 
 export interface FormDataSheets {
-    investAmount: 'ate_300k' | '300k_a_1m' | '1m_a_3m' | 'acima_3m' | '';
-    goal: 'reduzir_plantoes' | 'manutencao_protecao' | 'aposentadoria_renda_passiva' | 'organizacao_financeira' | '';
+    investAmount:
+    | "ate_300k"
+    | "300k_a_1m"
+    | "1m_a_3m"
+    | "acima_3m"
+    | "";
+    goal:
+    | "reduzir_plantoes"
+    | "manutencao_protecao"
+    | "aposentadoria_renda_passiva"
+    | "organizacao_financeira"
+    | "";
     challenge: string;
     urgency: number;
     fullName: string;
     whatsapp: string;
 }
 
-// -------- Estilos --------
-const StyledContainer = styled(Container)(() => ({
-    height: '100vh',
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundImage: 'linear-gradient(135deg, #a2eafeff 0%, #95ffb0ff 100%)',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center center',
-    backgroundSize: 'cover',
+const PageContainer = styled(Container)(() => ({
+    minHeight: "100vh",
+    background: `linear-gradient(
+        180deg,
+        #FFF 0%,
+        #dbffff 100%
+    )`,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingTop: 40,
+    paddingBottom: 40,
 }));
 
 const StyledCard = styled(Card)(() => ({
-    borderRadius: 12,
-    maxHeight: '100vh',
-    overflowY: 'auto',
-    maxWidth: "90%"
+    borderRadius: 16,
+    boxShadow: "0px 15px 50px rgba(0,0,0,0.06)",
+    maxWidth: 720,
+    width: "100%",
 }));
 
-const CustomStepConnector = styled(StepConnector)(({ theme }) => ({
-    '&.MuiStepConnector-root': {
-        top: 12,
-    },
-    '& .MuiStepConnector-line': {
-        borderColor: theme.palette.mode === 'dark' ? theme.palette.grey[700] : theme.palette.grey[300],
-        borderTopWidth: 2,
-        borderRadius: 1,
-    },
-}));
-
-// Ícone do Step: bolinha azul quando ativo, check verde quando completed (nunca mostra check no ativo)
-const StepIconRoot = styled('div')<{
-    ownerState: { active?: boolean; completed?: boolean };
-}>(({ theme, ownerState }) => ({
-    backgroundColor: ownerState.active
-        ? theme.palette.primary.main
-        : theme.palette.mode === 'dark'
-            ? theme.palette.grey[700]
-            : theme.palette.grey[300],
-    zIndex: 1,
-    color: '#fff',
-    width: 24,
-    height: 24,
-    display: 'flex',
-    borderRadius: '50%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    transition: 'all .2s ease',
-    ...(ownerState.completed && !ownerState.active && {
-        backgroundColor: theme.palette.success.main,
-    }),
-}));
-
-const CompactFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
-    marginBottom: theme.spacing(2),
-    alignItems: "flex-start",
-    minHeight: "32px", // altura menor
-    "& .MuiFormControlLabel-label": {
-        fontSize: "0.875rem", // fonte menor
-    },
-    "& .MuiRadio-root": {
-        padding: "4px", // menos espaço no radio
-    },
-}));
-
-function CustomStepIcon(props: { active?: boolean; completed?: boolean; className?: string }) {
-    const { active, completed, className } = props;
-    return (
-        <StepIconRoot ownerState={{ active, completed }} className={className}>
-            {completed && !active ? <Check fontSize="small" /> : <span style={{ fontSize: 12, lineHeight: 1 }}> </span>}
-        </StepIconRoot>
-    );
-}
-
-// -------- Validação simples por etapa --------
-function validateStep(stepIndex: number, data: FormDataSheets) {
-    const errors: Partial<Record<keyof FormDataSheets, string>> = {};
-    switch (stepIndex) {
-        case 0:
-            if (!data.investAmount) errors.investAmount = 'Selecione uma faixa de valor.';
-            break;
-        case 5:
-            if (!data.whatsapp) {
-                errors.whatsapp = 'Informe seu WhatsApp.';
-            } else {
-                // Validação simples para BR (apenas dígitos 10-11). Ajuste conforme necessário.
-                const digits = data.whatsapp.replace(/\D/g, '');
-                if (digits.length < 10 || digits.length > 11) {
-                    errors.whatsapp = 'Informe um número válido (DDD + número).';
-                }
-            }
-            break;
-        default:
-            break;
-    }
-    return errors;
-}
-
-// -------- Componente Principal --------
 export default function FinancialForm() {
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
-    const steps = useMemo(
-        () => [
-            'Recursos',
-            'Objetivo',
-            'Desafio',
-            'Urgência',
-            'Nome',
-            'WhatsApp',
-        ],
-        []
-    );
-
-    const [activeStep, setActiveStep] = useState(0);
-
-    // Completed manual: somente índices menores que o ativo ficam completed
-    const isStepCompleted = (index: number) => index < activeStep;
+    const navigate = useNavigate();
 
     const [data, setData] = useState<FormDataSheets>({
-        investAmount: '',
-        goal: '',
-        challenge: '',
-        urgency: 0,
-        fullName: '',
-        whatsapp: '',
+        investAmount: "",
+        goal: "",
+        challenge: "",
+        urgency: 5,
+        fullName: "",
+        whatsapp: "",
     });
-
-    const [errors, setErrors] = useState<Partial<Record<keyof FormDataSheets, string>>>({});
 
     const handleChange =
         (field: keyof FormDataSheets) =>
-            (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-                setData((prev) => ({ ...prev, [field]: e.target.value as any }));
-                // Limpa erro ao digitar
-                setErrors((prev) => ({ ...prev, [field]: undefined }));
+            (event: React.ChangeEvent<HTMLInputElement>) => {
+                setData((prev) => ({
+                    ...prev,
+                    [field]: event.target.value,
+                }));
             };
 
-    const handleNext = () => {
-        const errs = validateStep(activeStep, data);
-        setErrors(errs);
-        if (Object.keys(errs).length === 0) {
-            setActiveStep((prev) => Math.min(prev + 1, steps.length));
+    const formatPhone = (value: string) => {
+        const digits = value.replace(/\D/g, "");
+        const limited = digits.slice(0, 11);
+
+        if (limited.length <= 2) {
+            return `(${limited}`;
         }
+
+        if (limited.length <= 7) {
+            return `(${limited.slice(0, 2)}) ${limited.slice(2)}`;
+        }
+
+        return `(${limited.slice(0, 2)}) ${limited.slice(2, 3)} ${limited.slice(
+            3,
+            7
+        )}-${limited.slice(7)}`;
     };
 
-    const handleBack = () => {
-        setActiveStep((prev) => Math.max(prev - 1, 0));
+    const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const formatted = formatPhone(event.target.value);
+
+        setData((prev) => ({
+            ...prev,
+            whatsapp: formatted,
+        }));
     };
-    const navigate = useNavigate();
+
+
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const errs = validateStep(activeStep, data);
-        setErrors(errs);
-        if (Object.keys(errs).length > 0) return;
-
-        console.log('Dados enviados:', data);
-        setActiveStep(steps.length);
-        navigate("/obrigado");
         await sendToGoogleSheet(data);
-
+        navigate("/obrigado");
     };
 
-    const renderStepContent = (index: number) => {
-        switch (index) {
-            case 0:
-                return (
-                    <FormControl component="fieldset" fullWidth>
-                        <Typography variant="h6" mb={2}>
-                            1. Quanto você já possui investido ou disponível para investir nos seus objetivos?
-                        </Typography>
-                        <RadioGroup
-                            name="investAmount"
-                            value={data.investAmount}
-                            onChange={handleChange('investAmount')}
-                        >
-                            <CompactFormControlLabel value="ate_300k" control={<Radio />} label="Até R$300.000" />
-                            <CompactFormControlLabel value="300k_a_1m" control={<Radio />} label="De R$300.001 a R$1.000.000" />
-                            <CompactFormControlLabel value="1m_a_3m" control={<Radio />} label="De R$1.000.001 a R$3.000.000" />
-                            <CompactFormControlLabel value="acima_3m" control={<Radio />} label="Acima de R$3.000.001" />
-                        </RadioGroup>
-                        {errors.investAmount && (
-                            <Typography color="error" variant="body2" mt={1}>
-                                {errors.investAmount}
-                            </Typography>
-                        )}
-                    </FormControl>
-                );
-            case 1:
-                return (
-                    <FormControl component="fieldset" fullWidth>
-                        <Typography variant="h6" mb={2}>
-                            2. Qual das seguintes metas financeiras melhor descreve seu objetivo para os próximos anos?
-                        </Typography>
-                        <RadioGroup name="goal" value={data.goal} onChange={handleChange('goal')}>
-                            <CompactFormControlLabel value="reduzir_plantoes" control={<Radio />} label="Reduzir carga de plantões" />
-                            <CompactFormControlLabel
-                                value="manutencao_protecao"
-                                control={<Radio />}
-                                label="Manutenção e proteção do patrimônio construído"
-                            />
-                            <CompactFormControlLabel
-                                value="aposentadoria_renda_passiva"
-                                control={<Radio />}
-                                label="Garantir aposentadoria através de renda passiva de investimentos"
-                            />
-                            <CompactFormControlLabel
-                                value="organizacao_financeira"
-                                control={<Radio />}
-                                label="Se organizar financeiramente"
-                            />
-                        </RadioGroup>
-                        {errors.goal && (
-                            <Typography color="error" variant="body2" mt={1}>
-                                {errors.goal}
-                            </Typography>
-                        )}
-                    </FormControl>
-                );
-            case 2:
-                return (
-                    <Box>
-                        <Typography variant="h6" mb={2}>
-                            3. Qual é o maior desafio específico que tem te impedido de alcançar esse objetivo?
-                        </Typography>
-                        <TextField
-                            fullWidth
-                            multiline
-                            minRows={4}
-                            placeholder="Ex.: falta de tempo para gerenciar investimentos, excesso de informações, estratégias genéricas que não funcionam para sua realidade, etc."
-                            value={data.challenge}
-                            onChange={handleChange('challenge')}
-                            error={!!errors.challenge}
-                            helperText={errors.challenge}
-                        />
-                    </Box>
-                );
-            case 3:
-                const marks = Array.from({ length: 11 }, (_, i) => ({
-                    value: i,
-                    label: String(i),
-                }));
-
-                return (
-                    <FormControl component="fieldset" fullWidth>
-                        <Typography variant="h6" mb={2}>
-                            4. Em uma escala de 0 a 10, qual a urgência em resolver esse problema?
-                        </Typography>
-
-                        <Slider
-                            value={typeof data.urgency === "number" ? data.urgency : 0}
-                            onChange={(_, newValue) => {
-                                if (typeof newValue === "number") {
-                                    setData((prev) => ({ ...prev, urgency: newValue }));
-                                }
-                            }}
-                            step={1}
-                            marks={marks}
-                            min={0}
-                            max={10}
-                            valueLabelDisplay="auto"
-                        />
-
-                        {/* Legenda */}
-                        <Box mt={2}>
-                            <Typography component="ul" variant="body2" sx={{ pl: 2, listStyleType: "disc" }}>
-                                <li style={{ marginBottom: "10px" }}>0–4 (Posso esperar, ainda não é prioridade máxima)</li>
-                                <li style={{ marginBottom: "10px" }}>5–8 (É importante, mas posso me planejar com calma)</li>
-                                <li style={{ marginBottom: "10px" }}>9–10 (Preciso resolver agora, a situação está me gerando angústia ou me impedindo de progredir)</li>
-                            </Typography>
-                        </Box>
-
-                        {errors.urgency && (
-                            <Typography color="error" variant="body2" mt={1}>
-                                {errors.urgency}
-                            </Typography>
-                        )}
-                    </FormControl>
-                );
-            case 4:
-                return (
-                    <Box>
-                        <Typography variant="h6" mb={2}>
-                            5. Nome completo
-                        </Typography>
-                        <TextField
-                            fullWidth
-                            placeholder="Seu nome completo"
-                            value={data.fullName}
-                            onChange={handleChange('fullName')}
-                            error={!!errors.fullName}
-                            helperText={errors.fullName}
-                        />
-                    </Box>
-                );
-            case 5:
-                return (
-                    <Box>
-                        <Typography variant="h6" mb={2}>
-                            6. WhatsApp
-                        </Typography>
-                        <TextField
-                            fullWidth
-                            placeholder="(11) 9 9999-9999"
-                            value={data.whatsapp}
-                            onChange={handleChange('whatsapp')}
-                            error={!!errors.whatsapp}
-                            helperText={errors.whatsapp || 'Apenas números também são aceitos; validaremos DDD + número.'}
-                            inputProps={{ inputMode: 'tel' }}
-                        />
-                    </Box>
-                );
-            default:
-                return null;
-        }
-    };
-
-    const isLastStep = activeStep === steps.length - 1;
-    
     return (
-        <StyledContainer maxWidth={false} disableGutters>
+        <PageContainer maxWidth={false}>
             <StyledCard>
-                <CardContent sx={{ p: { xs: 2, sm: 4 } }}>
-                    <Typography variant="h5" fontWeight={700} gutterBottom>
-                        Formulário
-                    </Typography>
-
-                    <form onSubmit={handleSubmit} noValidate>
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                flexDirection: isMobile ? 'column' : 'row',
-                                gap: 3,
-                            }}
+                <CardContent>
+                    <Box mb={4}>
+                        <Typography
+                            variant="h4"
+                            fontWeight={700}
+                            color="#0D2B45"
+                            gutterBottom
+                            textAlign={"center"}
                         >
-                            {/* Stepper */}
-                            <Box sx={{ minWidth: isMobile ? '100%' : 260 }}>
-                                <Stepper
-                                    activeStep={activeStep}
-                                    orientation="horizontal"
-                                    alternativeLabel
-                                    connector={<CustomStepConnector />}
+                            Análise para Planejamento Patrimonial Estratégico
+                        </Typography>
+
+                        <Typography variant="body1" color="text.secondary" textAlign={"center"}>
+                            Atendimento exclusivo e personalizado de acordo com sua necessidade.
+                        </Typography>
+                    </Box>
+
+                    <form onSubmit={handleSubmit}>
+                        <Box mb={5}>
+                            <Typography
+                                variant="h5"
+                                fontWeight={600}
+                                color="#0D2B45"
+                                gutterBottom
+                            >
+                                1. Quanto você já possui investido ou disponível para investir nos seus objetivos?
+                            </Typography>
+
+                            <FormControl fullWidth>
+                                <RadioGroup
+                                    value={data.investAmount}
+                                    onChange={handleChange("investAmount")}
                                     sx={{
-                                        flexWrap: "wrap", // permite quebrar linha
-                                        "& .MuiStep-root": {
-                                            flexBasis: isMobile ? "30%" : "auto", // 2 por linha no mobile
-                                            flexGrow: 1,
-                                        },
-                                        "& .MuiStepLabel-label": { fontSize: isMobile ? "0.6rem" : "1rem" },
-                                        "& .MuiStepIcon-root": {
-                                            width: isMobile ? 14 : 24,
-                                            height: isMobile ? 14 : 24,
+                                        "& .MuiFormControlLabel-root": {
+                                            padding: "8px 12px",
+                                            borderRadius: 8,
+                                            transition: "0.2s",
+                                            "&:hover": {
+                                                backgroundColor: "#F1F5F9",
+                                            },
                                         },
                                     }}
                                 >
-                                    {steps.map((label, index) => (
-                                        <Step key={label} completed={isStepCompleted(index)}>
-                                            <StepLabel StepIconComponent={CustomStepIcon}>{label}</StepLabel>
-                                        </Step>
-                                    ))}
-                                </Stepper>
+                                    <FormControlLabel
+                                        value="ate_300k"
+                                        control={<Radio />}
+                                        label="Até R$ 300.000"
+                                    />
+                                    <FormControlLabel
+                                        value="300k_a_1m"
+                                        control={<Radio />}
+                                        label="De R$ 300.001 a R$ 1.000.000"
+                                    />
+                                    <FormControlLabel
+                                        value="1m_a_3m"
+                                        control={<Radio />}
+                                        label="De R$ 1.000.001 a R$ 3.000.000"
+                                    />
+                                    <FormControlLabel
+                                        value="acima_3m"
+                                        control={<Radio />}
+                                        label="Acima de R$ 3.000.000"
+                                    />
+                                </RadioGroup>
+                            </FormControl>
+                        </Box>
 
+                        <Divider sx={{ mb: 5 }} />
+
+                        <Box mb={5}>
+                            <Typography
+                                variant="h5"
+                                fontWeight={600}
+                                color="#0D2B45"
+                                gutterBottom
+                            >
+                                2. Qual das seguintes metas financeiras melhor descreve seu objetivo para os próximos anos?
+                            </Typography>
+
+                            <FormControl fullWidth>
+                                <RadioGroup
+                                    value={data.goal}
+                                    onChange={handleChange("goal")}
+                                >
+                                    <FormControlLabel
+                                        value="reduzir_plantoes"
+                                        control={<Radio />}
+                                        label="Reduzir carga de plantões"
+                                    />
+                                    <FormControlLabel
+                                        value="manutencao_protecao"
+                                        control={<Radio />}
+                                        label="Manutenção e proteção do patrimônio construído"
+                                    />
+                                    <FormControlLabel
+                                        value="aposentadoria_renda_passiva"
+                                        control={<Radio />}
+                                        label="Garantir aposentadoria através de renda passiva de investimentos"
+                                    />
+                                    <FormControlLabel
+                                        value="organizacao_financeira"
+                                        control={<Radio />}
+                                        label="Se organizar financeiramente"
+                                    />
+                                </RadioGroup>
+                            </FormControl>
+                        </Box>
+
+                        <Divider sx={{ mb: 5 }} />
+
+                        <Box mb={5}>
+                            <Typography
+                                variant="h5"
+                                fontWeight={600}
+                                color="#0D2B45"
+                                gutterBottom
+                            >
+                                3. Qual é o principal desafio que tem te impedido de alcançar esse objetivo?
+                            </Typography>
+
+                            <TextField
+                                fullWidth
+                                multiline
+                                minRows={4}
+                                placeholder="Ex.: falta de tempo, excesso de informações desconectadas, ausência de estratégia personalizada..."
+                                value={data.challenge}
+                                onChange={handleChange("challenge")}
+                            />
+                        </Box>
+
+                        <Divider sx={{ mb: 5 }} />
+
+                        <Box mb={5}>
+                            <Typography
+                                variant="h5"
+                                fontWeight={600}
+                                color="#0D2B45"
+                                gutterBottom
+                            >
+                                4. Em uma escala de 0 a 10, qual a urgência em resolver esse problema?
+                            </Typography>
+
+                            <Slider
+                                value={data.urgency}
+                                onChange={(_, value) =>
+                                    typeof value === "number" &&
+                                    setData((prev) => ({ ...prev, urgency: value }))
+                                }
+                                min={0}
+                                max={10}
+                                step={1}
+                                marks
+                                valueLabelDisplay="off"
+                                sx={{
+                                    mt: 2,
+                                    "& .MuiSlider-thumb": {
+                                        backgroundColor: "#0D2B45",
+                                    },
+                                    "& .MuiSlider-track": {
+                                        backgroundColor: "#0D2B45",
+                                    },
+                                }}
+                            />
+
+                            <Box textAlign="center" mt={2}>
+                                <Typography
+                                    variant="h4"
+                                    fontWeight={700}
+                                    color="#0D2B45"
+                                >
+                                    {data.urgency}
+                                </Typography>
                             </Box>
 
-                            {/* Conteúdo da etapa */}
-                            <Box sx={{ flex: 1 }}>
-                                {renderStepContent(activeStep)}
-                                <Grid
-                                    container
-                                    spacing={2}
-                                    mt={2}
-                                    sx={{
-                                        flexDirection: isMobile ? 'row' : 'row', // sempre lado a lado
-                                        justifyContent: "space-between",
-                                        alignItems: "center",
-                                    }}
-                                >
-                                    <Button
-                                        variant="contained"
-                                        onClick={handleBack}
-                                        disabled={activeStep === 0}
-                                        sx={{ minWidth: 40 }}
-                                    >
-                                        <ArrowBackIosNewIcon />
-                                    </Button>
+                            <Box mt={2}>
+                                <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+                                    <Box component="span" fontWeight={600} color="#0D2B45">
+                                        0–4:
+                                    </Box>{" "}
+                                    Posso esperar, ainda não é prioridade máxima.
+                                </Typography>
 
-                                    {/* Avançar ou Enviar */}
-                                    {!isLastStep ? (
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
-                                            onClick={handleNext}
-                                            sx={{ minWidth: 40 }}
-                                        >
-                                            <ArrowForwardIosIcon />
-                                        </Button>
-                                    ) : (
-                                        <Button type="submit" variant="contained" color="primary">
-                                            Enviar
-                                        </Button>
-                                    )}
-                                </Grid>
+                                <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+                                    <Box component="span" fontWeight={600} color="#0D2B45">
+                                        5–8:
+                                    </Box>{" "}
+                                    É importante, mas posso me planejar com calma.
+                                </Typography>
+
+                                <Typography variant="body2" color="text.secondary">
+                                    <Box component="span" fontWeight={600} color="#0D2B45">
+                                        9–10:
+                                    </Box>{" "}
+                                    Preciso resolver agora, a situação está me gerando angústia ou me impedindo de progredir.
+                                </Typography>
                             </Box>
 
                         </Box>
+
+                        <Divider sx={{ mb: 5 }} />
+
+                        <Box mb={4}>
+                            <Typography
+                                variant="h5"
+                                fontWeight={600}
+                                color="#0D2B45"
+                                gutterBottom
+                                mb={2}
+                            >
+                                5. Dados para contato
+                            </Typography>
+
+                            <TextField
+                                fullWidth
+                                label="Nome"
+                                sx={{ mb: 3 }}
+                                value={data.fullName}
+                                onChange={handleChange("fullName")}
+                                required
+                                inputProps={{
+                                    maxLength: 60,
+                                }}
+                            />
+
+                            <TextField
+                                fullWidth
+                                label="WhatsApp"
+                                placeholder="(11) 9 9999-9999"
+                                value={data.whatsapp}
+                                onChange={handlePhoneChange}
+                                required
+                                inputProps={{
+                                    inputMode: "numeric",
+                                    maxLength: 16,
+                                }}
+                            />
+                        </Box>
+
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{
+                                py: 1.6,
+                                fontWeight: 600,
+                                fontSize: "1rem",
+                                backgroundColor: "#0D2B45",
+                                "&:hover": {
+                                    backgroundColor: "#081E30",
+                                },
+                            }}
+                        >
+                            Enviar
+                        </Button>
+
+                        <Button
+                            fullWidth
+                            variant="contained"
+                            onClick={() => navigate("/")}
+                            sx={{
+                                py: 1.6,
+                                mt: 1,
+                                fontWeight: 600,
+                                color: "#000",
+                                fontSize: "1rem",
+                                backgroundColor: "#ffffff",
+                                "&:hover": {
+                                    backgroundColor: "#bbe1ff",
+                                },
+                            }}
+                        >
+                            Voltar
+                        </Button>
                     </form>
                 </CardContent>
             </StyledCard>
-        </StyledContainer>
+        </PageContainer>
     );
 }
-

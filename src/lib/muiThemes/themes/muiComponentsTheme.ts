@@ -183,9 +183,6 @@ export const muiComponents = createTheme({
           "& .MuiInputBase-root": {
             borderRadius: "8px",
           },
-          "& .MuiInputBase-input": {
-            padding: "8px 12px",
-          },
         },
       },
     },

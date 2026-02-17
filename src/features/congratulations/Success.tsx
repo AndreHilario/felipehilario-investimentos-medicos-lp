@@ -21,17 +21,17 @@ export interface FormDataSheets {
     whatsapp: string;
 }
 
-// -------- Estilos --------
 const StyledContainer = styled(Container)(() => ({
     height: '100vh',
     width: '100%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundImage: 'linear-gradient(135deg, #a2eafeff 0%, #95ffb0ff 100%)',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center center',
-    backgroundSize: 'cover',
+    background: `linear-gradient(
+        180deg,
+        #d0fcfc 0%,
+        #d0fcfc 100%
+    )`,
 }));
 
 const StyledCard = styled(Card)(() => ({
@@ -42,7 +42,6 @@ const StyledCard = styled(Card)(() => ({
 }));
 
 
-// -------- Componente Principal --------
 export default function Success() {
 
     const navigate = useNavigate();
@@ -69,6 +68,12 @@ export default function Success() {
                                         fullWidth
                                         variant="contained"
                                         onClick={() => navigate("/agendamento")}
+                                        sx={{
+                                            backgroundColor: "#0D2B45",
+                                            "&:hover": {
+                                                backgroundColor: "#081E30",
+                                            },
+                                        }}
                                     >
                                         Preencher novamente
                                     </Button>
@@ -79,6 +84,12 @@ export default function Success() {
                                         fullWidth
                                         variant="contained"
                                         onClick={() => navigate("/")}
+                                        sx={{
+                                            backgroundColor: "#0D2B45",
+                                            "&:hover": {
+                                                backgroundColor: "#081E30",
+                                            },
+                                        }}
                                     >
                                         Voltar
                                     </Button>
@@ -89,13 +100,13 @@ export default function Success() {
                                         fullWidth
                                         variant="contained"
                                         sx={{
-                                            background: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`, // Gradiente Azul > Verde
-                                            color: "#fff", // Texto branco
-                                            transition: "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out", // Suaviza a animação de hover
-                                            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)", // Sombra inicial
+                                            background: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+                                            color: "#fff",
+                                            transition: "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out",
+                                            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
                                             "&:hover": {
-                                                transform: "scale(1.05)", // Leve aumento ao passar o mouse
-                                                boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.3)", // Sombra ao passar o mouse
+                                                transform: "scale(1.05)",
+                                                boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.3)",
                                             },
                                         }}
                                         startIcon={<WhatsAppIcon />}
