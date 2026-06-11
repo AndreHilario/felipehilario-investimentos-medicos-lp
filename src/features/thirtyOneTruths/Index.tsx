@@ -436,7 +436,7 @@ export function ModernThirtyOneTruthsPage() {
           </Container>
         </Box>
 
-        <Box component="section" sx={{ py: { xs: 8, md: 13 } }}>
+        <Box component="section" sx={{ py: { xs: 4, md: 8 } }}>
           <Container maxWidth="xl">
             <Box
               sx={{
@@ -729,7 +729,7 @@ export function ThirtyOneTruthsPage() {
         <Box
           component="section"
           sx={{
-            py: { xs: 7, md: 12 },
+            py: { xs: 2, md: 6 },
             background:
               "radial-gradient(circle at 78% 16%, rgba(var(--lp-accent-rgb), 0.2), transparent 28%), linear-gradient(180deg, var(--lp-hero-top) 0%, var(--lp-bg) 100%)",
           }}
@@ -767,7 +767,7 @@ export function ThirtyOneTruthsPage() {
                     fontWeight: 950,
                     lineHeight: 0.96,
                     letterSpacing: 0,
-                    fontSize: { xs: "2.45rem", sm: "3.4rem", md: "5rem" },
+                    fontSize: { xs: "2rem", sm: "3rem", md: "4rem" },
                   }}
                 >
                   31 verdades sobre dinheiro que você só descobre tarde demais.
@@ -804,13 +804,13 @@ export function ThirtyOneTruthsPage() {
                 Acesso imediato por apenas R$ 10
               </Typography>
               <Typography fontWeight={800} textAlign={{ xs: "center", md: "right" }} color="var(--lp-text-muted)">
-                Pagamento único. Sem mensalidade. Sem upsell escondido.
+                Pagamento único. Sem mensalidade.
               </Typography>
             </Stack>
           </Container>
         </Box>
 
-        <Box component="section" sx={{ py: { xs: 8, md: 13 } }}>
+        <Box component="section" sx={{ py: { xs: 4, md: 8 } }}>
           <Container maxWidth="lg">
             <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "0.9fr 1.1fr" }, gap: { xs: 5, md: 8 } }}>
               <Box>
@@ -844,7 +844,7 @@ export function ThirtyOneTruthsPage() {
           </Container>
         </Box>
 
-        <Box component="section" sx={{ py: { xs: 8, md: 13 }, bgcolor: "var(--lp-bg-elevated)" }}>
+        <Box component="section" sx={{ py: { xs: 4, md: 8 }, bgcolor: "var(--lp-bg-elevated)" }}>
           <Container maxWidth="lg">
             <Stack spacing={4} alignItems="center" textAlign="center" sx={{ maxWidth: 900, mx: "auto" }}>
               <SectionLabel>O inimigo nomeado</SectionLabel>
@@ -863,7 +863,7 @@ export function ThirtyOneTruthsPage() {
           </Container>
         </Box>
 
-        <Box component="section" sx={{ py: { xs: 8, md: 13 } }}>
+        <Box component="section" sx={{ py: { xs: 4, md: 8 } }}>
           <Container maxWidth="lg">
             <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" }, gap: { xs: 5, md: 8 }, alignItems: "center" }}>
               <Stack spacing={3}>
@@ -910,7 +910,7 @@ export function ThirtyOneTruthsPage() {
           </Container>
         </Box>
 
-        <Box component="section" sx={{ py: { xs: 8, md: 13 }, bgcolor: "var(--lp-inverse-bg)", color: "var(--lp-inverse-text)" }}>
+        <Box component="section" sx={{ py: { xs: 4, md: 8 }, bgcolor: "var(--lp-inverse-bg)", color: "var(--lp-inverse-text)" }}>
           <Container maxWidth="lg">
             <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" }, gap: { xs: 5, md: 8 }, alignItems: "center" }}>
               <Box
@@ -959,7 +959,7 @@ export function ThirtyOneTruthsPage() {
           </Container>
         </Box>
 
-        <Box component="section" sx={{ py: { xs: 8, md: 13 } }}>
+        <Box component="section" sx={{ py: { xs: 4, md: 8 } }}>
           <Container maxWidth="lg">
             <Stack spacing={5} alignItems="center" textAlign="center">
               <Box sx={{ maxWidth: 800 }}>
@@ -998,7 +998,7 @@ export function ThirtyOneTruthsPage() {
           Reativar quando houver comentários reais de clientes para exibir.
         */}
 
-        <Box id="checkout" component="section" sx={{ py: { xs: 8, md: 13 }, bgcolor: "var(--lp-inverse-bg)", color: "var(--lp-inverse-text)" }}>
+        <Box id="checkout" component="section" sx={{ py: { xs: 4, md: 8 }, bgcolor: "var(--lp-inverse-bg)", color: "var(--lp-inverse-text)" }}>
           <Container maxWidth="md">
             <Box
               sx={{
@@ -1045,7 +1045,7 @@ export function ThirtyOneTruthsPage() {
           </Container>
         </Box>
 
-        <Box component="section" sx={{ py: { xs: 8, md: 13 } }}>
+        <Box component="section" sx={{ py: { xs: 4, md: 8 } }}>
           <Container maxWidth="lg">
             <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "0.8fr 1.2fr" }, gap: { xs: 4, md: 8 }, alignItems: "start" }}>
               <Stack spacing={3}>
@@ -1069,7 +1069,7 @@ export function ThirtyOneTruthsPage() {
           </Container>
         </Box>
 
-        <Box component="section" sx={{ py: { xs: 8, md: 13 }, bgcolor: "var(--lp-bg-elevated)" }}>
+        <Box component="section" sx={{ py: { xs: 4, md: 8 }, bgcolor: "var(--lp-bg-elevated)" }}>
           <Container maxWidth="md">
             <Stack spacing={4} textAlign="center">
               <Box>
@@ -1112,7 +1112,7 @@ export function ThirtyOneTruthsPage() {
           </Container>
         </Box>
 
-        <Box component="section" sx={{ py: { xs: 8, md: 13 } }}>
+        <Box component="section" sx={{ py: { xs: 4, md: 8 } }}>
           <Container maxWidth="lg">
             <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "repeat(3, 1fr)" }, gap: 2.5, mb: 6 }}>
               {[
