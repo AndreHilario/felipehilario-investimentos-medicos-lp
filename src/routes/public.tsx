@@ -3,6 +3,7 @@ import FinancialForm from "../features/quests/Questionary";
 import Success  from "../features/congratulations/Success";
 import { Index1 } from "../features/Index1";
 import { ModernThirtyOneTruthsPage, ThirtyOneTruthsPage } from "../features/thirtyOneTruths/Index";
+import { Estudo } from "../features/estudo/Index";
 
 export const publicRoutes = [
   {
@@ -28,5 +29,9 @@ export const publicRoutes = [
   {
     path: "/obrigado",
     element: <Success />,
+  },
+  {
+    path: "/estudo",
+    element: <Estudo />,
   },
 ];
